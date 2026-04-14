@@ -54,6 +54,10 @@ Release tag convention:
 - Use `event-summer-2026-rc.*` for event-ready release candidates
 - Reserve `v1.0.0` and later `v*` tags for a polished reusable starter on `main` or a truly stable full release
 
+Merge-back planning:
+
+- Use [MERGEBACK_MAIN.md](/home/roman/dev-env/guy_olympics/MERGEBACK_MAIN.md) to selectively move reusable event-branch work back to `main`
+
 ## Local demo defaults
 
 - Competition slug: `summer-2026`
