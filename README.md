@@ -63,7 +63,8 @@ Release tag convention:
 
 1. In Supabase SQL Editor, run `supabase/migrations/0001_init.sql`
 2. Then run `supabase/migrations/0002_realtime_public_read.sql` to enable Realtime subscriptions and public read policies for the live/public clients
-3. Add these env vars locally and in Vercel:
+3. Then run `supabase/migrations/0003_admin_auth_hardening.sql` to enable persistent login-attempt rate limiting in production
+4. Add these env vars locally and in Vercel:
 
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=
@@ -74,11 +75,17 @@ GO_SUPABASE_STORAGE_BUCKET=player-photos
 GO_ADMIN_SESSION_SECRET=
 ```
 
-4. Create a public Storage bucket named `player-photos`
+5. Create a public Storage bucket named `player-photos`
 
 The app will automatically use Supabase for data and uploads when `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are present. Without them, it falls back to the local demo store in `.data/demo-db.json`.
 
 When `NEXT_PUBLIC_SUPABASE_URL` and a public browser key are present, the deployed clients also subscribe to Supabase Realtime and trigger immediate snapshot refreshes when competition data changes.
+
+Admin auth notes:
+
+- `GO_ADMIN_SESSION_SECRET` is required in production
+- admin sessions expire after 12 hours
+- failed login attempts are rate limited by IP/competition slug
 
 ## Run locally
 

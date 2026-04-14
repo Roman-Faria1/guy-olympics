@@ -153,7 +153,8 @@ export function AdminDashboard({
     });
 
     if (!response.ok) {
-      setToast("Passcode did not match");
+      const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+      setToast(payload?.error ?? "Passcode did not match");
       return;
     }
 

@@ -5,21 +5,58 @@ import { cookies } from "next/headers";
 import { getCompetitionBySlug } from "@/lib/store/file-store";
 
 const COOKIE_NAME = "go_admin_session";
+const SESSION_TTL_SECONDS = 60 * 60 * 12;
 
 function getSecret() {
-  return process.env.GO_ADMIN_SESSION_SECRET || "local-dev-secret";
+  const configured = process.env.GO_ADMIN_SESSION_SECRET;
+  if (configured) {
+    return configured;
+  }
+
+  if (process.env.NODE_ENV === "production") {
+    throw new Error("GO_ADMIN_SESSION_SECRET must be set in production");
+  }
+
+  return "local-dev-secret";
 }
 
 export function hashPasscode(passcode: string) {
   return createHash("sha256").update(passcode).digest("hex");
 }
 
-export function buildSessionValue(slug: string, passcodeHash: string) {
+export function buildSessionValue(slug: string, passcodeHash: string, expiresAt = Date.now() + SESSION_TTL_SECONDS * 1000) {
   const signature = createHmac("sha256", getSecret())
-    .update(`${slug}:${passcodeHash}`)
+    .update(`${slug}:${passcodeHash}:${expiresAt}`)
     .digest("hex");
 
-  return `${slug}.${signature}`;
+  return `${slug}.${expiresAt}.${signature}`;
+}
+
+export function isSessionValueValid(
+  cookieValue: string,
+  slug: string,
+  passcodeHash: string,
+  now = Date.now(),
+) {
+  const [cookieSlug, expiresAtRaw, actualSignature] = cookieValue.split(".");
+  if (!cookieSlug || !expiresAtRaw || !actualSignature || cookieSlug !== slug) {
+    return false;
+  }
+
+  const expiresAt = Number(expiresAtRaw);
+  if (!Number.isFinite(expiresAt) || expiresAt <= now) {
+    return false;
+  }
+
+  const expected = buildSessionValue(slug, passcodeHash, expiresAt);
+  const actualBuffer = Buffer.from(cookieValue);
+  const expectedBuffer = Buffer.from(expected);
+
+  if (actualBuffer.length !== expectedBuffer.length) {
+    return false;
+  }
+
+  return timingSafeEqual(actualBuffer, expectedBuffer);
 }
 
 export async function createAdminSession(slug: string) {
@@ -34,7 +71,7 @@ export async function createAdminSession(slug: string) {
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",
-    maxAge: 60 * 60 * 12,
+    maxAge: SESSION_TTL_SECONDS,
   });
 
   return true;
@@ -42,7 +79,13 @@ export async function createAdminSession(slug: string) {
 
 export async function clearAdminSession() {
   const cookieStore = await cookies();
-  cookieStore.delete(COOKIE_NAME);
+  cookieStore.set(COOKIE_NAME, "", {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    maxAge: 0,
+  });
 }
 
 export async function isAdminAuthenticated(slug: string) {
@@ -57,15 +100,7 @@ export async function isAdminAuthenticated(slug: string) {
     return false;
   }
 
-  const expected = buildSessionValue(slug, competition.adminPasscodeHash);
-  const actualBuffer = Buffer.from(cookieValue);
-  const expectedBuffer = Buffer.from(expected);
-
-  if (actualBuffer.length !== expectedBuffer.length) {
-    return false;
-  }
-
-  return timingSafeEqual(actualBuffer, expectedBuffer);
+  return isSessionValueValid(cookieValue, slug, competition.adminPasscodeHash);
 }
 
 export async function verifyAdminPasscode(slug: string, passcode: string) {
