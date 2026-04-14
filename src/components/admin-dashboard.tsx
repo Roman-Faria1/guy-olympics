@@ -4,6 +4,7 @@ import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 
 import { LeaderboardTable, PlayerCard, TopNav } from "@/components/shared";
 import { useCompetitionSnapshot } from "@/components/use-competition-snapshot";
+import { validateScoreInputs } from "@/lib/score-entry";
 import type { CompetitionSnapshot, EventKind, PlayerProfile } from "@/lib/types";
 
 type PlayerFormState = {
@@ -93,6 +94,20 @@ export function AdminDashboard({
     () => snapshot.players.filter((player) => player.active),
     [snapshot.players],
   );
+  const savedEntriesForSelectedEvent = selectedEventId
+    ? snapshot.resultsByEventId[selectedEventId] ?? []
+    : [];
+  const scoreValidation = useMemo(
+    () =>
+      validateScoreInputs({
+        scoreInputs,
+        players: snapshot.players,
+        event: selectedEvent,
+        partnerGroups: snapshot.partnerGroups,
+      }),
+    [scoreInputs, selectedEvent, snapshot.partnerGroups, snapshot.players],
+  );
+  const hasSavedScores = savedEntriesForSelectedEvent.length > 0;
 
   async function refreshSnapshot() {
     const response = await fetch(`/api/competition/${competitionSlug}/snapshot`, {
@@ -365,6 +380,30 @@ export function AdminDashboard({
       return;
     }
 
+    if (clear) {
+      if (!window.confirm(`Clear all saved scores for ${selectedEvent?.name ?? "this event"}?`)) {
+        return;
+      }
+    } else {
+      if (scoreValidation.errors.length > 0) {
+        setToast(scoreValidation.errors[0]);
+        return;
+      }
+
+      if (
+        scoreValidation.warnings.length > 0 &&
+        !window.confirm(
+          [
+            `Save scores for ${selectedEvent?.name ?? "this event"}?`,
+            "",
+            ...scoreValidation.warnings,
+          ].join("\n"),
+        )
+      ) {
+        return;
+      }
+    }
+
     const response = await fetch(`/api/admin/${competitionSlug}/results`, {
       method: clear ? "DELETE" : "POST",
       headers: {
@@ -384,7 +423,8 @@ export function AdminDashboard({
     });
 
     if (!response.ok) {
-      setToast(clear ? "Could not clear scores" : "Could not save scores");
+      const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+      setToast(payload?.error ?? (clear ? "Could not clear scores" : "Could not save scores"));
       return;
     }
 
@@ -787,6 +827,11 @@ export function AdminDashboard({
         <div className="admin-stage">
           <div className="section-row">
             <h2 className="section-title">Score Entry</h2>
+            {selectedEvent ? (
+              <button className="ghost-button" onClick={() => toggleLiveEvent(selectedEvent.id)} type="button">
+                {selectedEvent.status === "live" ? "Stop Live" : "Mark Live"}
+              </button>
+            ) : null}
           </div>
           <div className="field">
             <label htmlFor="score-event">Event</label>
@@ -804,9 +849,41 @@ export function AdminDashboard({
           </div>
           {selectedEvent ? (
             <div style={{ marginTop: 16 }}>
+              <div className="score-summary-grid">
+                <div className="metric">
+                  <span className="metric-label">Event Status</span>
+                  <span className="metric-value">{selectedEvent.status}</span>
+                </div>
+                <div className="metric">
+                  <span className="metric-label">Draft Coverage</span>
+                  <span className="metric-value">
+                    {scoreValidation.filledUnits}/{scoreValidation.expectedUnits} {scoreValidation.unitLabel}
+                  </span>
+                </div>
+                <div className="metric">
+                  <span className="metric-label">Saved Entries</span>
+                  <span className="metric-value">{savedEntriesForSelectedEvent.length}</span>
+                </div>
+              </div>
               <p className="helper-text">
-                Enter finishing place for each player. Team events automatically sync partner placements.
+                {selectedEvent.kind === "team"
+                  ? "Enter one shared finish per partner group. If you fill both teammates, the placements must match."
+                  : "Enter finishing place for each player. Leaving someone blank keeps them unscored for now."}
               </p>
+              {scoreValidation.errors.length > 0 ? (
+                <div className="alert error" role="alert">
+                  {scoreValidation.errors.map((message) => (
+                    <p key={message}>{message}</p>
+                  ))}
+                </div>
+              ) : null}
+              {scoreValidation.warnings.length > 0 ? (
+                <div className="alert warning">
+                  {scoreValidation.warnings.map((message) => (
+                    <p key={message}>{message}</p>
+                  ))}
+                </div>
+              ) : null}
               <div className="event-grid" style={{ marginTop: 16 }}>
                 {activePlayers.map((player) => (
                   <article className="score-card" key={player.id}>
@@ -815,6 +892,9 @@ export function AdminDashboard({
                       <label htmlFor={`score-${player.id}`}>Placement</label>
                       <input
                         id={`score-${player.id}`}
+                        className={
+                          scoreValidation.invalidPlayerIds.includes(player.id) ? "input-invalid" : undefined
+                        }
                         min={1}
                         onChange={(event) =>
                           setScoreInputs((current) => ({
@@ -830,10 +910,20 @@ export function AdminDashboard({
                 ))}
               </div>
               <div className="button-row" style={{ marginTop: 18 }}>
-                <button className="button" onClick={() => saveScores(false)} type="button">
+                <button
+                  className="button"
+                  disabled={scoreValidation.errors.length > 0}
+                  onClick={() => saveScores(false)}
+                  type="button"
+                >
                   Save Scores
                 </button>
-                <button className="danger-button" onClick={() => saveScores(true)} type="button">
+                <button
+                  className="danger-button"
+                  disabled={!hasSavedScores}
+                  onClick={() => saveScores(true)}
+                  type="button"
+                >
                   Clear Event
                 </button>
               </div>
