@@ -13,7 +13,7 @@ A Next.js + TypeScript refactor of the original single-file Guy Olympics scoreke
 - Shared cookie-based admin access with passcode
 - File-backed demo datastore in `.data/demo-db.json`
 - Automatic Supabase datastore support when env vars are configured
-- Legacy JSON import from the current `index.html` backup shape
+- Backup restore for both the current app export format and the legacy `index.html` backup shape
 - Versioned export route for the new app format
 - Supabase-ready SQL schema in `supabase/migrations/0001_init.sql`
 

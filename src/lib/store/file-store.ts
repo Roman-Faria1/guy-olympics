@@ -8,6 +8,7 @@ import {
   DEMO_COMPETITION_SLUG,
   DEMO_ADMIN_PASSCODE,
 } from "@/lib/constants";
+import { isAppBackup, transformAppBackup } from "@/lib/app-backup";
 import { hasSupabaseServerConfig } from "@/lib/supabase";
 import { transformLegacyBackup } from "@/lib/legacy-import";
 import { buildLeaderboard, buildResultsByEventId } from "@/lib/scoring";
@@ -18,6 +19,7 @@ import {
   exportCompetitionBackupSupabase,
   getCompetitionBySlugSupabase,
   getCompetitionSnapshotSupabase,
+  importCompetitionBackupSupabase,
   importLegacyBackupSupabase,
   listCompetitionsSupabase,
   randomizePartnersSupabase,
@@ -643,55 +645,17 @@ export async function clearEventResults(slug: string, eventId: string) {
   await writeDb(db);
 }
 
-export async function setLiveEvent(slug: string, eventId: string | null) {
-  if (shouldUseSupabase()) {
-    return setLiveEventSupabase(slug, eventId);
-  }
-
-  const db = await readDb();
-  const competition = db.competitions.find((item) => item.slug === slug);
-  if (!competition) {
-    throw new Error("Competition not found");
-  }
-
-  db.events = setSingleLiveEvent(db.events, eventId);
-  updateCompetitionTimestamp(db, competition.id);
-  await writeDb(db);
-}
-
-export async function exportCompetitionBackup(slug: string): Promise<AppBackup> {
-  if (shouldUseSupabase()) {
-    return exportCompetitionBackupSupabase(slug);
-  }
-
-  const snapshot = await getCompetitionSnapshot(slug);
-  if (!snapshot) {
-    throw new Error("Competition not found");
-  }
-
-  return {
-    version: 3,
-    exportedAt: timestamp(),
-    competition: snapshot.competition,
-    players: snapshot.players,
-    events: snapshot.events,
-    partnerGroups: snapshot.partnerGroups,
-    resultsByEventId: snapshot.resultsByEventId,
-  };
-}
-
-export async function importLegacyBackup(slug: string, backup: LegacyBackup) {
-  if (shouldUseSupabase()) {
-    return importLegacyBackupSupabase(slug, backup);
-  }
-
-  const db = await readDb();
-  const competition = db.competitions.find((item) => item.slug === slug);
-  if (!competition) {
-    throw new Error("Competition not found");
-  }
-
-  const transformed = transformLegacyBackup(backup, competition.id);
+function replaceCompetitionData(
+  db: DatabaseState,
+  competition: CompetitionRecord,
+  transformed: {
+    players: PlayerProfile[];
+    events: Event[];
+    partnerGroups: PartnerGroup[];
+    resultsByEventId: Record<string, Array<{ playerId: string; placement: number }>>;
+    nowPlayingEventId: string | null;
+  },
+) {
   const eventIds = new Set(
     db.events.filter((event) => event.competitionId === competition.id).map((event) => event.id),
   );
@@ -742,6 +706,89 @@ export async function importLegacyBackup(slug: string, backup: LegacyBackup) {
   );
 
   db.events = setSingleLiveEvent(db.events, transformed.nowPlayingEventId);
+}
+
+export async function setLiveEvent(slug: string, eventId: string | null) {
+  if (shouldUseSupabase()) {
+    return setLiveEventSupabase(slug, eventId);
+  }
+
+  const db = await readDb();
+  const competition = db.competitions.find((item) => item.slug === slug);
+  if (!competition) {
+    throw new Error("Competition not found");
+  }
+
+  db.events = setSingleLiveEvent(db.events, eventId);
+  updateCompetitionTimestamp(db, competition.id);
+  await writeDb(db);
+}
+
+export async function exportCompetitionBackup(slug: string): Promise<AppBackup> {
+  if (shouldUseSupabase()) {
+    return exportCompetitionBackupSupabase(slug);
+  }
+
+  const snapshot = await getCompetitionSnapshot(slug);
+  if (!snapshot) {
+    throw new Error("Competition not found");
+  }
+
+  return {
+    version: 3,
+    exportedAt: timestamp(),
+    competition: snapshot.competition,
+    players: snapshot.players,
+    events: snapshot.events,
+    partnerGroups: snapshot.partnerGroups,
+    resultsByEventId: snapshot.resultsByEventId,
+  };
+}
+
+export async function importLegacyBackup(slug: string, backup: LegacyBackup) {
+  if (shouldUseSupabase()) {
+    return importLegacyBackupSupabase(slug, backup);
+  }
+
+  const db = await readDb();
+  const competition = db.competitions.find((item) => item.slug === slug);
+  if (!competition) {
+    throw new Error("Competition not found");
+  }
+
+  const transformed = transformLegacyBackup(backup, competition.id);
+  replaceCompetitionData(db, competition, transformed);
+  updateCompetitionTimestamp(db, competition.id);
+  await writeDb(db);
+}
+
+export async function importCompetitionBackup(slug: string, backup: AppBackup | LegacyBackup) {
+  if (shouldUseSupabase()) {
+    return importCompetitionBackupSupabase(slug, backup);
+  }
+
+  if (!isAppBackup(backup)) {
+    return importLegacyBackup(slug, backup);
+  }
+
+  const db = await readDb();
+  const competition = db.competitions.find((item) => item.slug === slug);
+  if (!competition) {
+    throw new Error("Competition not found");
+  }
+
+  const transformed = transformAppBackup(backup, competition.id, slug);
+  replaceCompetitionData(db, competition, transformed);
+  db.competitions = db.competitions.map((entry) =>
+    entry.id === competition.id
+      ? {
+          ...entry,
+          name: transformed.competition.name,
+          subtitle: transformed.competition.subtitle,
+          status: transformed.competition.status,
+        }
+      : entry,
+  );
   updateCompetitionTimestamp(db, competition.id);
   await writeDb(db);
 }

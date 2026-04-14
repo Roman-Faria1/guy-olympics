@@ -18,7 +18,7 @@ Current release-tag convention:
 - [ ] Add stronger admin auth/rate limiting before wider sharing
 - [ ] Improve the broadcast/live presentation for stream day
 - [ ] Add fullscreen / scene-based broadcast modes for OBS and stream operators
-- [ ] Restore from the new export format, not just the legacy HTML backup format
+- [x] Restore from the new export format, not just the legacy HTML backup format
 - [ ] Add an event-day QA checklist and seeded rehearsal flow
 
 ## Merge-back candidates for `main`

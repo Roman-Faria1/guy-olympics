@@ -1,5 +1,6 @@
 import { createHash, randomUUID } from "node:crypto";
 
+import { isAppBackup, transformAppBackup } from "@/lib/app-backup";
 import {
   DEFAULT_INDIVIDUAL_EVENTS,
   DEFAULT_TEAM_EVENTS,
@@ -18,6 +19,7 @@ import type {
   LegacyBackup,
   PartnerGroup,
   PlayerProfile,
+  ResultEntry,
 } from "@/lib/types";
 
 type CompetitionRow = {
@@ -675,6 +677,134 @@ async function syncEventStatuses(
   await updateCompetitionTimestamp(competitionId, "live");
 }
 
+async function replaceCompetitionDataSupabase(
+  competitionId: string,
+  transformed: {
+    players: PlayerProfile[];
+    events: Event[];
+    partnerGroups: PartnerGroup[];
+    resultsByEventId: Record<string, ResultEntry[]>;
+  },
+) {
+  const supabase = createAdminSupabaseClient();
+
+  const { data: existingGroups } = await supabase
+    .from("partner_groups")
+    .select("id")
+    .eq("competition_id", competitionId);
+  const groupIds = (existingGroups ?? []).map((group) => group.id as string);
+
+  if (groupIds.length) {
+    const { error: deleteMembersError } = await supabase
+      .from("partner_group_members")
+      .delete()
+      .in("partner_group_id", groupIds);
+    if (deleteMembersError) {
+      throw deleteMembersError;
+    }
+  }
+
+  await Promise.all([
+    supabase.from("results").delete().in(
+      "event_id",
+      (
+        await supabase.from("events").select("id").eq("competition_id", competitionId)
+      ).data?.map((event) => event.id as string) ?? [],
+    ),
+    supabase.from("players").delete().eq("competition_id", competitionId),
+    supabase.from("events").delete().eq("competition_id", competitionId),
+    groupIds.length
+      ? supabase.from("partner_groups").delete().in("id", groupIds)
+      : Promise.resolve({ error: null }),
+  ]);
+
+  if (transformed.players.length) {
+    const { error: playerError } = await supabase.from("players").insert(
+      transformed.players.map((player) => ({
+        id: player.id,
+        competition_id: player.competitionId,
+        name: player.name,
+        nickname: player.nickname,
+        fact: player.fact,
+        height: player.height,
+        weight: player.weight,
+        vertical: player.vertical,
+        forty: player.forty,
+        bench: player.bench,
+        grip: player.grip,
+        trash_talk: player.trashTalk,
+        sore_loser: player.soreLoser,
+        biggest_threat: player.biggestThreat,
+        weakness: player.weakness,
+        photo_path: player.photoPath,
+        active: player.active,
+        sort_order: player.sortOrder,
+      })),
+    );
+    if (playerError) {
+      throw playerError;
+    }
+  }
+
+  if (transformed.events.length) {
+    const { error: eventError } = await supabase.from("events").insert(
+      transformed.events.map((event) => ({
+        id: event.id,
+        competition_id: event.competitionId,
+        name: event.name,
+        kind: event.kind,
+        order_index: event.orderIndex,
+        status: event.status,
+      })),
+    );
+    if (eventError) {
+      throw eventError;
+    }
+  }
+
+  if (transformed.partnerGroups.length) {
+    const { error: groupError } = await supabase.from("partner_groups").insert(
+      transformed.partnerGroups.map((group) => ({
+        id: group.id,
+        competition_id: competitionId,
+        group_number: group.groupNumber,
+      })),
+    );
+    if (groupError) {
+      throw groupError;
+    }
+
+    const { error: memberError } = await supabase.from("partner_group_members").insert(
+      transformed.partnerGroups.flatMap((group) =>
+        group.playerIds.map((playerId, index) => ({
+          partner_group_id: group.id,
+          player_id: playerId,
+          slot: index,
+        })),
+      ),
+    );
+    if (memberError) {
+      throw memberError;
+    }
+  }
+
+  const resultRows = Object.entries(transformed.resultsByEventId).flatMap(([eventId, entries]) =>
+    entries.map((entry) => ({
+      id: randomUUID(),
+      event_id: eventId,
+      player_id: entry.playerId,
+      placement: entry.placement,
+    })),
+  );
+
+  if (resultRows.length) {
+    const { error: resultError } = await supabase.from("results").insert(resultRows);
+    if (resultError) {
+      throw resultError;
+    }
+  }
+}
+
 export async function saveEventResultsSupabase(
   slug: string,
   eventId: string,
@@ -789,120 +919,40 @@ export async function importLegacyBackupSupabase(slug: string, backup: LegacyBac
   }
 
   const transformed = transformLegacyBackup(backup, competition.id);
-  const supabase = createAdminSupabaseClient();
+  await replaceCompetitionDataSupabase(competition.id, transformed);
 
-  const { data: existingGroups } = await supabase
-    .from("partner_groups")
-    .select("id")
-    .eq("competition_id", competition.id);
-  const groupIds = (existingGroups ?? []).map((group) => group.id as string);
-
-  if (groupIds.length) {
-    const { error: deleteMembersError } = await supabase
-      .from("partner_group_members")
-      .delete()
-      .in("partner_group_id", groupIds);
-    if (deleteMembersError) {
-      throw deleteMembersError;
-    }
-  }
-
-  await Promise.all([
-    supabase.from("results").delete().in(
-      "event_id",
-      (
-        await supabase.from("events").select("id").eq("competition_id", competition.id)
-      ).data?.map((event) => event.id as string) ?? [],
-    ),
-    supabase.from("players").delete().eq("competition_id", competition.id),
-    supabase.from("events").delete().eq("competition_id", competition.id),
-    groupIds.length ? supabase.from("partner_groups").delete().in("id", groupIds) : Promise.resolve({ error: null }),
-  ]);
-
-  if (transformed.players.length) {
-    const { error: playerError } = await supabase.from("players").insert(
-      transformed.players.map((player) => ({
-        id: player.id,
-        competition_id: player.competitionId,
-        name: player.name,
-        nickname: player.nickname,
-        fact: player.fact,
-        height: player.height,
-        weight: player.weight,
-        vertical: player.vertical,
-        forty: player.forty,
-        bench: player.bench,
-        grip: player.grip,
-        trash_talk: player.trashTalk,
-        sore_loser: player.soreLoser,
-        biggest_threat: player.biggestThreat,
-        weakness: player.weakness,
-        photo_path: player.photoPath,
-        active: player.active,
-        sort_order: player.sortOrder,
-      })),
-    );
-    if (playerError) {
-      throw playerError;
-    }
-  }
-
-  if (transformed.events.length) {
-    const { error: eventError } = await supabase.from("events").insert(
-      transformed.events.map((event) => ({
-        id: event.id,
-        competition_id: event.competitionId,
-        name: event.name,
-        kind: event.kind,
-        order_index: event.orderIndex,
-        status: event.status,
-      })),
-    );
-    if (eventError) {
-      throw eventError;
-    }
-  }
-
-  if (transformed.partnerGroups.length) {
-    const { error: groupError } = await supabase.from("partner_groups").insert(
-      transformed.partnerGroups.map((group) => ({
-        id: group.id,
-        competition_id: competition.id,
-        group_number: group.groupNumber,
-      })),
-    );
-    if (groupError) {
-      throw groupError;
-    }
-
-    const { error: memberError } = await supabase.from("partner_group_members").insert(
-      transformed.partnerGroups.flatMap((group) =>
-        group.playerIds.map((playerId, index) => ({
-          partner_group_id: group.id,
-          player_id: playerId,
-          slot: index,
-        })),
-      ),
-    );
-    if (memberError) {
-      throw memberError;
-    }
-  }
-
-  const resultRows = Object.entries(transformed.resultsByEventId).flatMap(([eventId, entries]) =>
-    entries.map((entry) => ({
-      id: randomUUID(),
-      event_id: eventId,
-      player_id: entry.playerId,
-      placement: entry.placement,
-    })),
+  await syncEventStatuses(
+    competition.id,
+    transformed.events,
+    transformed.nowPlayingEventId,
+    transformed.events.some((event) => event.status === "completed") ? undefined : null,
   );
+}
 
-  if (resultRows.length) {
-    const { error: resultError } = await supabase.from("results").insert(resultRows);
-    if (resultError) {
-      throw resultError;
-    }
+export async function importCompetitionBackupSupabase(slug: string, backup: AppBackup | LegacyBackup) {
+  if (!isAppBackup(backup)) {
+    return importLegacyBackupSupabase(slug, backup);
+  }
+
+  const competition = await getCompetitionRowBySlug(slug);
+  if (!competition) {
+    throw new Error("Competition not found");
+  }
+
+  const transformed = transformAppBackup(backup, competition.id, slug);
+  await replaceCompetitionDataSupabase(competition.id, transformed);
+
+  const supabase = createAdminSupabaseClient();
+  const { error: competitionError } = await supabase
+    .from("competitions")
+    .update({
+      name: transformed.competition.name,
+      subtitle: transformed.competition.subtitle,
+      status: transformed.competition.status,
+    })
+    .eq("id", competition.id);
+  if (competitionError) {
+    throw competitionError;
   }
 
   await syncEventStatuses(

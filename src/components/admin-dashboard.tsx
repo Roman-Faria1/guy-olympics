@@ -451,12 +451,13 @@ export function AdminDashboard({
       });
 
       if (!response.ok) {
-        setToast("Import failed");
+        const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+        setToast(payload?.error ?? "Import failed");
         return;
       }
 
       await refreshSnapshot();
-      setToast("Legacy backup imported");
+      setToast("Backup restored");
     } catch {
       setToast("Import failed");
     } finally {
@@ -516,7 +517,7 @@ export function AdminDashboard({
             Export Backup
           </a>
           <label className="small-button" htmlFor="legacy-import">
-            {importing ? "Importing..." : "Import Legacy JSON"}
+            {importing ? "Importing..." : "Import Backup JSON"}
           </label>
           <input
             accept=".json"
