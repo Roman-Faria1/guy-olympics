@@ -1,0 +1,116 @@
+{
+  "competitions": [
+    {
+      "id": "comp-demo-2026",
+      "slug": "summer-2026",
+      "name": "Guy Olympics",
+      "subtitle": "Summer 2026 · Beer Olympics Control Room",
+      "status": "setup",
+      "adminPasscodeHash": "5caddc4c49deec8eeb1979b212af18649ae0703f44dbc69c94eb62c5bd587614",
+      "createdAt": "2026-04-14T01:18:26Z",
+      "updatedAt": "2026-04-14T01:18:26Z"
+    }
+  ],
+  "players": [],
+  "events": [
+    {
+      "id": "evt-1",
+      "competitionId": "comp-demo-2026",
+      "name": "Mario Kart",
+      "kind": "individual",
+      "orderIndex": 0,
+      "status": "upcoming"
+    },
+    {
+      "id": "evt-2",
+      "competitionId": "comp-demo-2026",
+      "name": "Wii Sports",
+      "kind": "individual",
+      "orderIndex": 1,
+      "status": "upcoming"
+    },
+    {
+      "id": "evt-3",
+      "competitionId": "comp-demo-2026",
+      "name": "Beer Die",
+      "kind": "individual",
+      "orderIndex": 2,
+      "status": "upcoming"
+    },
+    {
+      "id": "evt-4",
+      "competitionId": "comp-demo-2026",
+      "name": "Dizzy Bat Race",
+      "kind": "individual",
+      "orderIndex": 3,
+      "status": "upcoming"
+    },
+    {
+      "id": "evt-5",
+      "competitionId": "comp-demo-2026",
+      "name": "Wiffle Ball Home Run Derby",
+      "kind": "individual",
+      "orderIndex": 4,
+      "status": "upcoming"
+    },
+    {
+      "id": "evt-6",
+      "competitionId": "comp-demo-2026",
+      "name": "Hot Dog Eating Contest",
+      "kind": "individual",
+      "orderIndex": 5,
+      "status": "upcoming"
+    },
+    {
+      "id": "evt-7",
+      "competitionId": "comp-demo-2026",
+      "name": "Cornhole",
+      "kind": "team",
+      "orderIndex": 6,
+      "status": "upcoming"
+    },
+    {
+      "id": "evt-8",
+      "competitionId": "comp-demo-2026",
+      "name": "Beer Pong",
+      "kind": "team",
+      "orderIndex": 7,
+      "status": "upcoming"
+    },
+    {
+      "id": "evt-9",
+      "competitionId": "comp-demo-2026",
+      "name": "Spikeball",
+      "kind": "team",
+      "orderIndex": 8,
+      "status": "upcoming"
+    },
+    {
+      "id": "evt-10",
+      "competitionId": "comp-demo-2026",
+      "name": "Pickleball Doubles",
+      "kind": "team",
+      "orderIndex": 9,
+      "status": "upcoming"
+    },
+    {
+      "id": "evt-11",
+      "competitionId": "comp-demo-2026",
+      "name": "Trivia",
+      "kind": "team",
+      "orderIndex": 10,
+      "status": "upcoming"
+    },
+    {
+      "id": "evt-12",
+      "competitionId": "comp-demo-2026",
+      "name": "Flip Cup Relay",
+      "kind": "team",
+      "orderIndex": 11,
+      "status": "upcoming"
+    }
+  ],
+  "partnerGroups": [],
+  "partnerGroupMembers": [],
+  "results": []
+}
