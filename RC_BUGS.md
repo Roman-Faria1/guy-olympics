@@ -8,6 +8,46 @@ No open RC blockers are currently logged.
 
 ## Resolved
 
+### RC-002: Score entry drafts were being overwritten during live refresh
+
+- Severity: blocker
+- Status: resolved in branch
+- Area: admin / scoring
+
+#### Summary
+
+While entering placements in admin, the score inputs could reset before save. Background snapshot refreshes were rehydrating the currently selected event's saved values back into the in-progress draft.
+
+#### Impact
+
+- active scoring was unreliable
+- operators could lose in-progress inputs before pressing save
+
+#### Resolution
+
+- the selected event draft now only re-seeds when the selected event actually changes
+- background snapshot updates no longer overwrite a dirty score draft
+
+### RC-003: Event radar on the live board did not show newly added events consistently
+
+- Severity: medium
+- Status: resolved in branch
+- Area: live board / broadcast
+
+#### Summary
+
+The live board radar was only rendering a sliced subset of events. Newly added events could exist in admin but not appear in the live schedule/radar if they landed past that cutoff.
+
+#### Impact
+
+- operators could think an event failed to save
+- public viewers could see an incomplete schedule
+
+#### Resolution
+
+- the schedule scene now renders the full event list
+- the overview scene still stays compact, but now indicates when additional events exist
+
 ### RC-001: Event preview deployment was protected by Vercel Authentication
 
 - Severity: blocker

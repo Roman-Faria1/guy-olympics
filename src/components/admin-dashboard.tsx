@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
 
 import { LeaderboardTable, PlayerCard, TopNav } from "@/components/shared";
 import { useCompetitionSnapshot } from "@/components/use-competition-snapshot";
@@ -63,6 +63,7 @@ export function AdminDashboard({
   const [scoreDraftDirty, setScoreDraftDirty] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [importing, setImporting] = useState(false);
+  const previousSelectedEventId = useRef<string>("");
 
   useEffect(() => {
     if (!toast) {
@@ -90,11 +91,15 @@ export function AdminDashboard({
 
   useEffect(() => {
     if (!selectedEventId) {
+      previousSelectedEventId.current = "";
       return;
     }
 
-    setScoreInputs(syncedScoreInputs);
-    setScoreDraftDirty(false);
+    if (previousSelectedEventId.current !== selectedEventId) {
+      previousSelectedEventId.current = selectedEventId;
+      setScoreInputs(syncedScoreInputs);
+      setScoreDraftDirty(false);
+    }
   }, [selectedEventId, syncedScoreInputs]);
 
   useEffect(() => {

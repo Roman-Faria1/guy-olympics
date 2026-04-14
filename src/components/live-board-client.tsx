@@ -46,6 +46,7 @@ export function LiveBoardClient({
     ? snapshot.players.find((entry) => entry.id === leader.playerId) ?? null
     : null;
   const chasers = snapshot.leaderboard.slice(1, 4);
+  const radarEvents = scene === "schedule" ? snapshot.events : snapshot.events.slice(0, 6);
   const progress =
     snapshot.broadcast.totalEvents > 0
       ? (snapshot.broadcast.completedEvents / snapshot.broadcast.totalEvents) * 100
@@ -270,7 +271,7 @@ export function LiveBoardClient({
                   <h2 className="section-title">Event Radar</h2>
                 </div>
                 <div className="broadcast-radar-list">
-                  {snapshot.events.slice(0, scene === "schedule" ? 8 : 6).map((event) => (
+                  {radarEvents.map((event) => (
                     <div className="broadcast-radar-row" key={event.id}>
                       <div>
                         <strong>{event.name}</strong>
@@ -290,6 +291,11 @@ export function LiveBoardClient({
                     </div>
                   ))}
                 </div>
+                {scene !== "schedule" && snapshot.events.length > radarEvents.length ? (
+                  <p className="muted" style={{ marginTop: 12 }}>
+                    +{snapshot.events.length - radarEvents.length} more events in the full schedule scene
+                  </p>
+                ) : null}
               </article>
             )}
 
