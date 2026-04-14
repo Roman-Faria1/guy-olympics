@@ -1,6 +1,7 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 const STORAGE_BUCKET = process.env.GO_SUPABASE_STORAGE_BUCKET || "player-photos";
+let browserClient: SupabaseClient | null = null;
 
 function getSupabaseUrl() {
   return process.env.NEXT_PUBLIC_SUPABASE_URL || "";
@@ -44,4 +45,24 @@ export function createAdminSupabaseClient(): SupabaseClient {
       autoRefreshToken: false,
     },
   });
+}
+
+export function createBrowserSupabaseClient(): SupabaseClient | null {
+  const url = getSupabaseUrl();
+  const publishableKey = getSupabasePublishableKey();
+
+  if (!url || !publishableKey) {
+    return null;
+  }
+
+  if (!browserClient) {
+    browserClient = createClient(url, publishableKey, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+      },
+    });
+  }
+
+  return browserClient;
 }
