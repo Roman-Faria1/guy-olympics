@@ -98,6 +98,16 @@ npm run dev
 
 - `http://localhost:3000/`
 - `http://localhost:3000/summer-2026/admin`
+- `http://localhost:3000/rehearsal`
+
+## Event-day rehearsal
+
+- Open `/rehearsal` for the QA checklist and seeded rehearsal flow
+- Download `/rehearsal/summer-2026-seed.json`
+- Export your current competition state from admin before importing the seed
+- Import the seed from the admin page to simulate a mid-tournament scenario
+- Run the checklist across admin, live board, and players routes
+- Restore your real backup when rehearsal is complete
 
 ## Notes
 

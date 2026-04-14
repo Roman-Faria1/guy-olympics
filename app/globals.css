@@ -549,6 +549,18 @@ main {
   background: linear-gradient(90deg, var(--gold), var(--gold-deep));
 }
 
+.checklist-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 12px;
+}
+
+.checklist-list li {
+  color: var(--text);
+  line-height: 1.45;
+}
+
 .broadcast-shell {
   width: min(1380px, calc(100vw - 24px));
 }

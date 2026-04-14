@@ -35,6 +35,9 @@ export default async function HomePage() {
       <section className="info-strip">
         <p>Default demo admin passcode: <code>olympics</code></p>
         <p>Data is stored in <code>.data/demo-db.json</code> until Supabase is connected.</p>
+        <p>
+          Rehearsal kit: <Link href="/rehearsal"><code>/rehearsal</code></Link>
+        </p>
       </section>
     </main>
   );

@@ -1,0 +1,221 @@
+{
+  "version": 3,
+  "exportedAt": "2026-04-14T12:00:00.000Z",
+  "competition": {
+    "id": "seed-competition",
+    "slug": "summer-2026",
+    "name": "Guy Olympics",
+    "subtitle": "Summer 2026 · Rehearsal Scenario",
+    "status": "live",
+    "createdAt": "2026-04-14T12:00:00.000Z",
+    "updatedAt": "2026-04-14T12:00:00.000Z"
+  },
+  "players": [
+    {
+      "id": "seed-player-1",
+      "competitionId": "seed-competition",
+      "name": "Roman",
+      "nickname": "Commish",
+      "fact": "Claims every rules dispute is a judgment call.",
+      "height": "6'0\"",
+      "weight": "188",
+      "vertical": "31\"",
+      "forty": "5.18",
+      "bench": "185",
+      "grip": "91",
+      "trashTalk": "Elite after one good round.",
+      "soreLoser": "Medium",
+      "biggestThreat": "HB",
+      "weakness": "Keeps score with too much confidence.",
+      "photoPath": null,
+      "active": true,
+      "sortOrder": 0
+    },
+    {
+      "id": "seed-player-2",
+      "competitionId": "seed-competition",
+      "name": "HB",
+      "nickname": "Hammer",
+      "fact": "Hits a clutch shot exactly when the camera finds him.",
+      "height": "5'11\"",
+      "weight": "196",
+      "vertical": "29\"",
+      "forty": "5.07",
+      "bench": "205",
+      "grip": "95",
+      "trashTalk": "Surgical and nonstop.",
+      "soreLoser": "Low",
+      "biggestThreat": "Roman",
+      "weakness": "Overcelebrates too early.",
+      "photoPath": null,
+      "active": true,
+      "sortOrder": 1
+    },
+    {
+      "id": "seed-player-3",
+      "competitionId": "seed-competition",
+      "name": "Matt",
+      "nickname": "Spreadsheet",
+      "fact": "Keeps unofficial standings in his head all day.",
+      "height": "6'2\"",
+      "weight": "201",
+      "vertical": "28\"",
+      "forty": "5.22",
+      "bench": "195",
+      "grip": "89",
+      "trashTalk": "Quiet until he has the receipts.",
+      "soreLoser": "Medium",
+      "biggestThreat": "Chris",
+      "weakness": "Starts slow in the first event.",
+      "photoPath": null,
+      "active": true,
+      "sortOrder": 2
+    },
+    {
+      "id": "seed-player-4",
+      "competitionId": "seed-competition",
+      "name": "Chris",
+      "nickname": "Lefty",
+      "fact": "Wins one impossible round every tournament.",
+      "height": "5'10\"",
+      "weight": "182",
+      "vertical": "30\"",
+      "forty": "5.11",
+      "bench": "175",
+      "grip": "87",
+      "trashTalk": "Sneaky and mean in the fourth quarter.",
+      "soreLoser": "High",
+      "biggestThreat": "Drew",
+      "weakness": "Needs a warm-up beer.",
+      "photoPath": null,
+      "active": true,
+      "sortOrder": 3
+    },
+    {
+      "id": "seed-player-5",
+      "competitionId": "seed-competition",
+      "name": "Drew",
+      "nickname": "Diesel",
+      "fact": "Looks unbeatable in scouting report photos.",
+      "height": "6'3\"",
+      "weight": "215",
+      "vertical": "27\"",
+      "forty": "5.35",
+      "bench": "225",
+      "grip": "98",
+      "trashTalk": "Minimal words, maximum eye contact.",
+      "soreLoser": "Low",
+      "biggestThreat": "Matt",
+      "weakness": "Not built for finesse events.",
+      "photoPath": null,
+      "active": true,
+      "sortOrder": 4
+    },
+    {
+      "id": "seed-player-6",
+      "competitionId": "seed-competition",
+      "name": "Tyler",
+      "nickname": "Wildcard",
+      "fact": "Can go from last place to MVP in one event.",
+      "height": "5'9\"",
+      "weight": "176",
+      "vertical": "32\"",
+      "forty": "4.98",
+      "bench": "165",
+      "grip": "86",
+      "trashTalk": "Talks like he already won.",
+      "soreLoser": "Very high",
+      "biggestThreat": "HB",
+      "weakness": "Sometimes forgets the format entirely.",
+      "photoPath": null,
+      "active": true,
+      "sortOrder": 5
+    }
+  ],
+  "events": [
+    {
+      "id": "seed-event-1",
+      "competitionId": "seed-competition",
+      "name": "Flip Cup",
+      "kind": "individual",
+      "orderIndex": 0,
+      "status": "completed"
+    },
+    {
+      "id": "seed-event-2",
+      "competitionId": "seed-competition",
+      "name": "Beer Pong",
+      "kind": "team",
+      "orderIndex": 1,
+      "status": "completed"
+    },
+    {
+      "id": "seed-event-3",
+      "competitionId": "seed-competition",
+      "name": "Mario Kart",
+      "kind": "individual",
+      "orderIndex": 2,
+      "status": "completed"
+    },
+    {
+      "id": "seed-event-4",
+      "competitionId": "seed-competition",
+      "name": "Relay Chug",
+      "kind": "team",
+      "orderIndex": 3,
+      "status": "live"
+    },
+    {
+      "id": "seed-event-5",
+      "competitionId": "seed-competition",
+      "name": "Kan Jam",
+      "kind": "team",
+      "orderIndex": 4,
+      "status": "upcoming"
+    }
+  ],
+  "partnerGroups": [
+    {
+      "id": "seed-group-1",
+      "groupNumber": 1,
+      "playerIds": ["seed-player-1", "seed-player-2"]
+    },
+    {
+      "id": "seed-group-2",
+      "groupNumber": 2,
+      "playerIds": ["seed-player-3", "seed-player-4"]
+    },
+    {
+      "id": "seed-group-3",
+      "groupNumber": 3,
+      "playerIds": ["seed-player-5", "seed-player-6"]
+    }
+  ],
+  "resultsByEventId": {
+    "seed-event-1": [
+      { "playerId": "seed-player-2", "placement": 1, "points": 5 },
+      { "playerId": "seed-player-1", "placement": 2, "points": 4 },
+      { "playerId": "seed-player-6", "placement": 3, "points": 3 },
+      { "playerId": "seed-player-4", "placement": 4, "points": 2 },
+      { "playerId": "seed-player-3", "placement": 5, "points": 1 },
+      { "playerId": "seed-player-5", "placement": 6, "points": 1 }
+    ],
+    "seed-event-2": [
+      { "playerId": "seed-player-3", "placement": 1, "points": 5 },
+      { "playerId": "seed-player-4", "placement": 1, "points": 5 },
+      { "playerId": "seed-player-1", "placement": 2, "points": 4 },
+      { "playerId": "seed-player-2", "placement": 2, "points": 4 },
+      { "playerId": "seed-player-5", "placement": 3, "points": 3 },
+      { "playerId": "seed-player-6", "placement": 3, "points": 3 }
+    ],
+    "seed-event-3": [
+      { "playerId": "seed-player-6", "placement": 1, "points": 5 },
+      { "playerId": "seed-player-3", "placement": 2, "points": 4 },
+      { "playerId": "seed-player-2", "placement": 3, "points": 3 },
+      { "playerId": "seed-player-5", "placement": 4, "points": 2 },
+      { "playerId": "seed-player-1", "placement": 5, "points": 1 },
+      { "playerId": "seed-player-4", "placement": 6, "points": 1 }
+    },
+    "seed-event-4": []
+  }
+}

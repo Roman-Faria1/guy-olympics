@@ -513,6 +513,12 @@ export function AdminDashboard({
       <div className="topbar">
         <TopNav competitionSlug={competitionSlug} />
         <div className="inline-actions">
+          <a className="ghost-button" href="/rehearsal">
+            Rehearsal Kit
+          </a>
+          <a className="ghost-button" href="/rehearsal/summer-2026-seed.json">
+            Download Seed
+          </a>
           <a className="ghost-button" href={`/api/admin/${competitionSlug}/export`}>
             Export Backup
           </a>

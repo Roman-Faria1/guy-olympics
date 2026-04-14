@@ -19,7 +19,7 @@ Current release-tag convention:
 - [ ] Improve the broadcast/live presentation for stream day
 - [ ] Add fullscreen / scene-based broadcast modes for OBS and stream operators
 - [x] Restore from the new export format, not just the legacy HTML backup format
-- [ ] Add an event-day QA checklist and seeded rehearsal flow
+- [x] Add an event-day QA checklist and seeded rehearsal flow
 
 ## Merge-back candidates for `main`
 
