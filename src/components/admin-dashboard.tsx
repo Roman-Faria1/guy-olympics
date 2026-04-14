@@ -60,6 +60,7 @@ export function AdminDashboard({
   const [eventKind, setEventKind] = useState<EventKind>("individual");
   const [selectedEventId, setSelectedEventId] = useState<string>("");
   const [scoreInputs, setScoreInputs] = useState<Record<string, string>>({});
+  const [scoreDraftDirty, setScoreDraftDirty] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [importing, setImporting] = useState(false);
 
@@ -78,16 +79,31 @@ export function AdminDashboard({
     }
   }, [selectedEventId, snapshot.events]);
 
+  const syncedScoreInputs = useMemo(() => {
+    if (!selectedEventId) {
+      return {};
+    }
+
+    const entries = snapshot.resultsByEventId[selectedEventId] ?? [];
+    return Object.fromEntries(entries.map((entry) => [entry.playerId, String(entry.placement)]));
+  }, [selectedEventId, snapshot.resultsByEventId]);
+
   useEffect(() => {
     if (!selectedEventId) {
       return;
     }
 
-    const entries = snapshot.resultsByEventId[selectedEventId] ?? [];
-    setScoreInputs(
-      Object.fromEntries(entries.map((entry) => [entry.playerId, String(entry.placement)])),
-    );
-  }, [selectedEventId, snapshot.resultsByEventId]);
+    setScoreInputs(syncedScoreInputs);
+    setScoreDraftDirty(false);
+  }, [selectedEventId, syncedScoreInputs]);
+
+  useEffect(() => {
+    if (!selectedEventId || scoreDraftDirty) {
+      return;
+    }
+
+    setScoreInputs(syncedScoreInputs);
+  }, [scoreDraftDirty, selectedEventId, syncedScoreInputs]);
 
   const selectedEvent = snapshot.events.find((event) => event.id === selectedEventId) ?? null;
   const activePlayers = useMemo(
@@ -429,6 +445,7 @@ export function AdminDashboard({
       return;
     }
 
+    setScoreDraftDirty(false);
     await refreshSnapshot();
     setToast(clear ? "Scores cleared" : "Scores saved");
   }
@@ -905,10 +922,13 @@ export function AdminDashboard({
                         }
                         min={1}
                         onChange={(event) =>
-                          setScoreInputs((current) => ({
-                            ...current,
-                            [player.id]: event.target.value,
-                          }))
+                          {
+                            setScoreDraftDirty(true);
+                            setScoreInputs((current) => ({
+                              ...current,
+                              [player.id]: event.target.value,
+                            }));
+                          }
                         }
                         type="number"
                         value={scoreInputs[player.id] ?? ""}
