@@ -48,6 +48,12 @@ Recommended workflow:
 2. Merge only reusable improvements back into `main`
 3. Keep `main` safe to fork for future Guy Olympics variants
 
+Release tag convention:
+
+- Use `event-summer-2026-beta.*` for deployed checkpoints on the active event branch
+- Use `event-summer-2026-rc.*` for event-ready release candidates
+- Reserve `v1.0.0` and later `v*` tags for a polished reusable starter on `main` or a truly stable full release
+
 ## Local demo defaults
 
 - Competition slug: `summer-2026`
