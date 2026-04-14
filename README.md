@@ -23,6 +23,31 @@ A Next.js + TypeScript refactor of the original single-file Guy Olympics scoreke
 - Legacy single-file HTML prototypes now live in `archive/`
 - The archived files are reference-only and are not used by the Next.js app
 
+## Branch strategy
+
+- `main` is the reusable scaffold/template branch
+- `event/*` branches are for real tournament deployments, production config, and event-specific customization
+- `feature/*` branches are optional short-lived branches for individual work streams
+
+What belongs on `main`:
+
+- generic product improvements
+- reusable bug fixes
+- framework, storage, auth, and deployment improvements that help all future forks
+
+What should stay on `event/*` branches:
+
+- event-specific copy and branding
+- real tournament/player data
+- production setup decisions that are specific to one event
+- one-off changes that make the scaffold less reusable
+
+Recommended workflow:
+
+1. Build and validate real event work on an `event/*` branch
+2. Merge only reusable improvements back into `main`
+3. Keep `main` safe to fork for future Guy Olympics variants
+
 ## Local demo defaults
 
 - Competition slug: `summer-2026`
