@@ -517,7 +517,7 @@ export function AdminDashboard({
           <a className="ghost-button" href="/rehearsal">
             Rehearsal Kit
           </a>
-          <a className="ghost-button" href="/rehearsal/summer-2026-seed.json">
+          <a className="ghost-button" href="/rehearsal/example-seed.json">
             Download Seed
           </a>
           <a className="ghost-button" href={`/api/admin/${competitionSlug}/export`}>

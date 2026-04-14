@@ -23,39 +23,11 @@ A Next.js + TypeScript starter for running small-scale tournaments with roster i
 - Legacy single-file HTML prototypes now live in `archive/`
 - The archived files are reference-only and are not used by the Next.js app
 
-## Branch strategy
-
-- `main` is the reusable scaffold/template branch
-- `event/*` branches are for real tournament deployments, production config, and event-specific customization
-- `feature/*` branches are optional short-lived branches for individual work streams
-
-What belongs on `main`:
-
-- generic product improvements
-- reusable bug fixes
-- framework, storage, auth, and deployment improvements that help all future forks
-
-What should stay on `event/*` branches:
-
-- event-specific copy and branding
-- real tournament/player data
-- production setup decisions that are specific to one event
-- one-off changes that make the scaffold less reusable
-
-Recommended workflow:
-
-1. Build and validate real event work on an `event/*` branch
-2. Merge only reusable improvements back into `main`
-3. Keep `main` safe to fork for future tournament variants
-
-Merge-back planning:
-
-- Use [MERGEBACK_MAIN.md](/home/roman/dev-env/guy_olympics/MERGEBACK_MAIN.md) to selectively move reusable event-branch work back to `main`
-
 ## Local demo defaults
 
 - Competition slug: `summer-2026`
 - Admin passcode: `olympics`
+- Demo name: `Tournament Ops Demo`
 
 ## Supabase setup
 
@@ -122,10 +94,10 @@ If you rename the demo competition slug, update these example routes to match yo
 - Use the built-in controls on `/{competitionSlug}/live` to switch scenes, auto-rotate them, or enter fullscreen
 - You can also start a scene directly with query params such as `?scene=podium` or `?scene=spotlight&autoplay=1`
 
-## Event Branch Notes
+## Maintainer Notes
 
-- Event-specific deploy tags and production branch conventions should live on your `event/*` branch docs, not on `main`
-- Use [MERGEBACK_MAIN.md](/home/roman/dev-env/guy_olympics/MERGEBACK_MAIN.md) when curating features back into the reusable starter
+- Branching workflow lives in [BRANCHING.md](/home/roman/dev-env/guy_olympics/BRANCHING.md)
+- Selective merge-back guidance lives in [MERGEBACK_MAIN.md](/home/roman/dev-env/guy_olympics/MERGEBACK_MAIN.md)
 
 ## Notes
 

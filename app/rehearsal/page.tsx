@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { DEMO_COMPETITION_SLUG } from "@/lib/constants";
+
 export const metadata = {
   title: "Tournament Rehearsal",
 };
@@ -17,9 +19,9 @@ const checklist = [
 ];
 
 const routeChecks = [
-  "/summer-2026/admin",
-  "/summer-2026/live",
-  "/summer-2026/players",
+  `/${DEMO_COMPETITION_SLUG}/admin`,
+  `/${DEMO_COMPETITION_SLUG}/live`,
+  `/${DEMO_COMPETITION_SLUG}/players`,
 ];
 
 export default function RehearsalPage() {
@@ -34,7 +36,7 @@ export default function RehearsalPage() {
         </p>
         <div className="route-actions" style={{ marginTop: 20 }}>
           <a href="/rehearsal/example-seed.json">Download Sample Seed</a>
-          <Link href="/summer-2026/admin">Open Admin</Link>
+          <Link href={`/${DEMO_COMPETITION_SLUG}/admin`}>Open Demo Admin</Link>
         </div>
       </section>
 
@@ -75,6 +77,10 @@ export default function RehearsalPage() {
           <p className="helper-text" style={{ marginTop: 16 }}>
             The seed backup uses the current app export format, so it exercises the same restore path you
             would use for a real backup recovery.
+          </p>
+          <p className="helper-text">
+            The route examples below use the default demo competition slug so the rehearsal flow works out
+            of the box.
           </p>
         </article>
       </section>

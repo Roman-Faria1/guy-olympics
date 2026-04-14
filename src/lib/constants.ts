@@ -18,4 +18,6 @@ export const DEFAULT_TEAM_EVENTS = [
 
 export const SCORE_POINTS = [5, 4, 3, 2, 1];
 export const DEMO_COMPETITION_SLUG = "summer-2026";
+export const DEMO_COMPETITION_NAME = "Tournament Ops Demo";
+export const DEMO_COMPETITION_SUBTITLE = "Starter template · Demo control room";
 export const DEMO_ADMIN_PASSCODE = "olympics";

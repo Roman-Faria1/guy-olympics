@@ -5,7 +5,9 @@ import { createHash, randomUUID } from "node:crypto";
 import {
   DEFAULT_INDIVIDUAL_EVENTS,
   DEFAULT_TEAM_EVENTS,
+  DEMO_COMPETITION_NAME,
   DEMO_COMPETITION_SLUG,
+  DEMO_COMPETITION_SUBTITLE,
   DEMO_ADMIN_PASSCODE,
 } from "@/lib/constants";
 import { isAppBackup, transformAppBackup } from "@/lib/app-backup";
@@ -63,8 +65,8 @@ function createSeedCompetition(): CompetitionRecord {
   return {
     id: randomUUID(),
     slug: DEMO_COMPETITION_SLUG,
-    name: "Guy Olympics",
-    subtitle: "Summer 2026 · Beer Olympics Control Room",
+    name: DEMO_COMPETITION_NAME,
+    subtitle: DEMO_COMPETITION_SUBTITLE,
     status: "setup",
     adminPasscodeHash: hashPasscode(process.env.GO_DEMO_ADMIN_PASSCODE || DEMO_ADMIN_PASSCODE),
     createdAt: now,

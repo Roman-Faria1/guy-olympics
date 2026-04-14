@@ -5,7 +5,9 @@ import {
   DEFAULT_INDIVIDUAL_EVENTS,
   DEFAULT_TEAM_EVENTS,
   DEMO_ADMIN_PASSCODE,
+  DEMO_COMPETITION_NAME,
   DEMO_COMPETITION_SLUG,
+  DEMO_COMPETITION_SUBTITLE,
 } from "@/lib/constants";
 import { transformLegacyBackup } from "@/lib/legacy-import";
 import { buildLeaderboard, buildResultsByEventId } from "@/lib/scoring";
@@ -184,8 +186,8 @@ async function ensureSeedCompetition() {
   const { error: competitionError } = await supabase.from("competitions").insert({
     id: competitionId,
     slug: DEMO_COMPETITION_SLUG,
-    name: "Guy Olympics",
-    subtitle: "Summer 2026 · Beer Olympics Control Room",
+    name: DEMO_COMPETITION_NAME,
+    subtitle: DEMO_COMPETITION_SUBTITLE,
     status: "setup",
     admin_passcode_hash: hashPasscode(process.env.GO_DEMO_ADMIN_PASSCODE || DEMO_ADMIN_PASSCODE),
     created_at: now,
@@ -213,8 +215,8 @@ async function ensureSeedCompetition() {
   return {
     id: competitionId,
     slug: DEMO_COMPETITION_SLUG,
-    name: "Guy Olympics",
-    subtitle: "Summer 2026 · Beer Olympics Control Room",
+    name: DEMO_COMPETITION_NAME,
+    subtitle: DEMO_COMPETITION_SUBTITLE,
     status: "setup",
     adminPasscodeHash: hashPasscode(process.env.GO_DEMO_ADMIN_PASSCODE || DEMO_ADMIN_PASSCODE),
     createdAt: now,
