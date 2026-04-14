@@ -4,6 +4,8 @@ This checklist is for taking `event/summer-2026` from the current beta line to `
 
 The standard is simple: if the event happened tomorrow, this build should feel safe to run.
 
+For a tighter production walkthrough, use [RC_REHEARSAL_RUNBOOK.md](/home/roman/dev-env/guy_olympics/RC_REHEARSAL_RUNBOOK.md).
+
 ## RC Goal
 
 - No known blocker bugs
