@@ -11,7 +11,7 @@ export default async function HomePage() {
     <main className="landing-shell">
       <section className="hero-panel">
         <p className="eyebrow">Shared Tournament Ops</p>
-        <h1>Guy Olympics Control Room</h1>
+        <h1>Tournament Control Room</h1>
         <p className="hero-copy">
           A proper small-scale event app: roster intel, score entry, live board, and a
           stream-safe public view.
@@ -35,6 +35,9 @@ export default async function HomePage() {
       <section className="info-strip">
         <p>Default demo admin passcode: <code>olympics</code></p>
         <p>Data is stored in <code>.data/demo-db.json</code> until Supabase is connected.</p>
+        <p>
+          Rehearsal kit: <Link href="/rehearsal"><code>/rehearsal</code></Link>
+        </p>
       </section>
     </main>
   );
