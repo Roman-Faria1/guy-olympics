@@ -140,7 +140,7 @@ export function LiveBoardClient({
             <div className="broadcast-badge-row">
               <span className="broadcast-live-pill">Live</span>
               <span className="eyebrow" style={{ marginBottom: 0 }}>
-                Beer Olympics Broadcast
+                Live Broadcast
               </span>
             </div>
             <h1>{snapshot.competition.name}</h1>
@@ -177,7 +177,7 @@ export function LiveBoardClient({
               <div>
                 <p className="kicker">Up Next</p>
                 <strong className="broadcast-stat-display">
-                  {nextEvent?.name ?? "Champagne ceremony"}
+                  {nextEvent?.name ?? "Postgame wrap-up"}
                 </strong>
               </div>
             </div>

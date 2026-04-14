@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Rehearsal Kit",
+  title: "Tournament Rehearsal",
 };
 
 const checklist = [
@@ -26,14 +26,14 @@ export default function RehearsalPage() {
   return (
     <main className="landing-shell">
       <section className="hero-panel">
-        <p className="eyebrow">Event-Day QA</p>
+        <p className="eyebrow">Tournament QA</p>
         <h1>Rehearsal Kit</h1>
         <p className="hero-copy">
-          Run one full fake tournament pass before the real event. This kit gives you a seeded backup
-          plus a simple checklist so you can verify scoring, stream output, and recovery flow end to end.
+          Run one full practice pass before the real event. This kit gives you a seeded backup plus a
+          simple checklist so you can verify scoring, stream output, and recovery flow end to end.
         </p>
         <div className="route-actions" style={{ marginTop: 20 }}>
-          <a href="/rehearsal/summer-2026-seed.json">Download Seed Backup</a>
+          <a href="/rehearsal/example-seed.json">Download Sample Seed</a>
           <Link href="/summer-2026/admin">Open Admin</Link>
         </div>
       </section>
@@ -57,19 +57,19 @@ export default function RehearsalPage() {
           <div className="metric-grid">
             <div className="metric">
               <span className="metric-label">Players</span>
-              <span className="metric-value">6 active competitors</span>
+              <span className="metric-value">4 active competitors</span>
             </div>
             <div className="metric">
               <span className="metric-label">Completed Events</span>
-              <span className="metric-value">3 scored events</span>
+              <span className="metric-value">2 scored events</span>
             </div>
             <div className="metric">
               <span className="metric-label">Live Event</span>
-              <span className="metric-value">Relay Chug</span>
+              <span className="metric-value">Target Toss</span>
             </div>
             <div className="metric">
               <span className="metric-label">Partner Draw</span>
-              <span className="metric-value">3 preset groups</span>
+              <span className="metric-value">2 preset groups</span>
             </div>
           </div>
           <p className="helper-text" style={{ marginTop: 16 }}>

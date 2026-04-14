@@ -1,6 +1,6 @@
-# Guy Olympics
+# Tournament Ops Starter
 
-A Next.js + TypeScript refactor of the original single-file Guy Olympics scorekeeper.
+A Next.js + TypeScript starter for running small-scale tournaments with roster intel, score entry, a public live board, and a broadcast-friendly display.
 
 ## What is implemented
 
@@ -46,13 +46,7 @@ Recommended workflow:
 
 1. Build and validate real event work on an `event/*` branch
 2. Merge only reusable improvements back into `main`
-3. Keep `main` safe to fork for future Guy Olympics variants
-
-Release tag convention:
-
-- Use `event-summer-2026-beta.*` for deployed checkpoints on the active event branch
-- Use `event-summer-2026-rc.*` for event-ready release candidates
-- Reserve `v1.0.0` and later `v*` tags for a polished reusable starter on `main` or a truly stable full release
+3. Keep `main` safe to fork for future tournament variants
 
 Merge-back planning:
 
@@ -111,10 +105,12 @@ npm run dev
 - `http://localhost:3000/summer-2026/admin`
 - `http://localhost:3000/rehearsal`
 
-## Event-day rehearsal
+If you rename the demo competition slug, update these example routes to match your chosen slug.
+
+## Rehearsal Flow
 
 - Open `/rehearsal` for the QA checklist and seeded rehearsal flow
-- Download `/rehearsal/summer-2026-seed.json`
+- Download `/rehearsal/example-seed.json`
 - Export your current competition state from admin before importing the seed
 - Import the seed from the admin page to simulate a mid-tournament scenario
 - Run the checklist across admin, live board, and players routes
@@ -125,6 +121,11 @@ npm run dev
 - The live board now supports operator-facing scenes for overview, podium, spotlight, and schedule
 - Use the built-in controls on `/{competitionSlug}/live` to switch scenes, auto-rotate them, or enter fullscreen
 - You can also start a scene directly with query params such as `?scene=podium` or `?scene=spotlight&autoplay=1`
+
+## Event Branch Notes
+
+- Event-specific deploy tags and production branch conventions should live on your `event/*` branch docs, not on `main`
+- Use [MERGEBACK_MAIN.md](/home/roman/dev-env/guy_olympics/MERGEBACK_MAIN.md) when curating features back into the reusable starter
 
 ## Notes
 

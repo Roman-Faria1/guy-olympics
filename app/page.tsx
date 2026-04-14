@@ -11,7 +11,7 @@ export default async function HomePage() {
     <main className="landing-shell">
       <section className="hero-panel">
         <p className="eyebrow">Shared Tournament Ops</p>
-        <h1>Guy Olympics Control Room</h1>
+        <h1>Tournament Control Room</h1>
         <p className="hero-copy">
           A proper small-scale event app: roster intel, score entry, live board, and a
           stream-safe public view.

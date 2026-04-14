@@ -1,0 +1,156 @@
+{
+  "version": 3,
+  "exportedAt": "2026-04-14T12:00:00.000Z",
+  "competition": {
+    "id": "example-competition",
+    "slug": "summer-2026",
+    "name": "Demo Invitational",
+    "subtitle": "Sample rehearsal scenario",
+    "status": "live",
+    "createdAt": "2026-04-14T12:00:00.000Z",
+    "updatedAt": "2026-04-14T12:00:00.000Z"
+  },
+  "players": [
+    {
+      "id": "player-1",
+      "competitionId": "example-competition",
+      "name": "Alex",
+      "nickname": "Captain",
+      "fact": "Always volunteers to run the bracket.",
+      "height": "6'0\"",
+      "weight": "185",
+      "vertical": "30\"",
+      "forty": "5.10",
+      "bench": "185",
+      "grip": "90",
+      "trashTalk": "Confident in every warmup.",
+      "soreLoser": "Medium",
+      "biggestThreat": "Jordan",
+      "weakness": "Spends too long debating rules.",
+      "photoPath": null,
+      "active": true,
+      "sortOrder": 0
+    },
+    {
+      "id": "player-2",
+      "competitionId": "example-competition",
+      "name": "Jordan",
+      "nickname": "Hammer",
+      "fact": "Hits a clutch shot every time the crowd gets loud.",
+      "height": "5'11\"",
+      "weight": "194",
+      "vertical": "29\"",
+      "forty": "5.04",
+      "bench": "205",
+      "grip": "95",
+      "trashTalk": "Sharp and relentless.",
+      "soreLoser": "Low",
+      "biggestThreat": "Taylor",
+      "weakness": "Celebrates a little early.",
+      "photoPath": null,
+      "active": true,
+      "sortOrder": 1
+    },
+    {
+      "id": "player-3",
+      "competitionId": "example-competition",
+      "name": "Taylor",
+      "nickname": "Spreadsheet",
+      "fact": "Keeps unofficial standings in their head.",
+      "height": "6'1\"",
+      "weight": "198",
+      "vertical": "28\"",
+      "forty": "5.20",
+      "bench": "195",
+      "grip": "89",
+      "trashTalk": "Quiet until the receipts come out.",
+      "soreLoser": "Medium",
+      "biggestThreat": "Morgan",
+      "weakness": "Starts slow.",
+      "photoPath": null,
+      "active": true,
+      "sortOrder": 2
+    },
+    {
+      "id": "player-4",
+      "competitionId": "example-competition",
+      "name": "Morgan",
+      "nickname": "Wildcard",
+      "fact": "Can jump from last to first in one event.",
+      "height": "5'9\"",
+      "weight": "176",
+      "vertical": "32\"",
+      "forty": "4.98",
+      "bench": "165",
+      "grip": "86",
+      "trashTalk": "Talks like the trophy is already theirs.",
+      "soreLoser": "High",
+      "biggestThreat": "Alex",
+      "weakness": "Sometimes forgets the event format.",
+      "photoPath": null,
+      "active": true,
+      "sortOrder": 3
+    }
+  ],
+  "events": [
+    {
+      "id": "event-1",
+      "competitionId": "example-competition",
+      "name": "Opening Sprint",
+      "kind": "individual",
+      "orderIndex": 0,
+      "status": "completed"
+    },
+    {
+      "id": "event-2",
+      "competitionId": "example-competition",
+      "name": "Partner Relay",
+      "kind": "team",
+      "orderIndex": 1,
+      "status": "completed"
+    },
+    {
+      "id": "event-3",
+      "competitionId": "example-competition",
+      "name": "Target Toss",
+      "kind": "individual",
+      "orderIndex": 2,
+      "status": "live"
+    },
+    {
+      "id": "event-4",
+      "competitionId": "example-competition",
+      "name": "Final Chase",
+      "kind": "team",
+      "orderIndex": 3,
+      "status": "upcoming"
+    }
+  ],
+  "partnerGroups": [
+    {
+      "id": "group-1",
+      "groupNumber": 1,
+      "playerIds": ["player-1", "player-2"]
+    },
+    {
+      "id": "group-2",
+      "groupNumber": 2,
+      "playerIds": ["player-3", "player-4"]
+    }
+  ],
+  "resultsByEventId": {
+    "event-1": [
+      { "playerId": "player-2", "placement": 1, "points": 5 },
+      { "playerId": "player-1", "placement": 2, "points": 4 },
+      { "playerId": "player-4", "placement": 3, "points": 3 },
+      { "playerId": "player-3", "placement": 4, "points": 2 }
+    ],
+    "event-2": [
+      { "playerId": "player-1", "placement": 1, "points": 5 },
+      { "playerId": "player-2", "placement": 1, "points": 5 },
+      { "playerId": "player-3", "placement": 2, "points": 4 },
+      { "playerId": "player-4", "placement": 2, "points": 4 }
+    ],
+    "event-3": []
+  }
+}
