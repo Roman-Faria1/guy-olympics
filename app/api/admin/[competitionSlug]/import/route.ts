@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 
 import { requireAdmin } from "@/lib/api";
-import { importLegacyBackup } from "@/lib/store/file-store";
-import type { LegacyBackup } from "@/lib/types";
+import { importCompetitionBackup } from "@/lib/store/file-store";
+import type { AppBackup, LegacyBackup } from "@/lib/types";
 
 export async function POST(
   request: Request,
@@ -19,6 +19,10 @@ export async function POST(
     return NextResponse.json({ error: "backup is required" }, { status: 400 });
   }
 
-  await importLegacyBackup(competitionSlug, payload.backup as LegacyBackup);
-  return NextResponse.json({ ok: true });
+  try {
+    await importCompetitionBackup(competitionSlug, payload.backup as AppBackup | LegacyBackup);
+    return NextResponse.json({ ok: true });
+  } catch {
+    return NextResponse.json({ error: "Import failed" }, { status: 400 });
+  }
 }
