@@ -20,6 +20,8 @@ Current release-tag convention:
 - [x] Add fullscreen / scene-based broadcast modes for OBS and stream operators
 - [x] Restore from the new export format, not just the legacy HTML backup format
 - [x] Add an event-day QA checklist and seeded rehearsal flow
+- [ ] Run the deployed RC rehearsal checklist and fix only RC-critical issues
+- [ ] Freeze features and tag `event-summer-2026-rc.1` when the deployed rehearsal passes
 
 ## Merge-back candidates for `main`
 
@@ -34,3 +36,7 @@ Current release-tag convention:
 - production Vercel/Supabase config
 - real tournament data
 - event-specific styling, copy, and stream polish
+
+## RC planning
+
+- Use [RC_CHECKLIST.md](/home/roman/dev-env/guy_olympics/RC_CHECKLIST.md) to run the deployed event-day rehearsal before cutting `event-summer-2026-rc.1`

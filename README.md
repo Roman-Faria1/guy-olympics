@@ -119,6 +119,7 @@ npm run dev
 - Import the seed from the admin page to simulate a mid-tournament scenario
 - Run the checklist across admin, live board, and players routes
 - Restore your real backup when rehearsal is complete
+- Use [RC_CHECKLIST.md](/home/roman/dev-env/guy_olympics/RC_CHECKLIST.md) when you are preparing to cut `event-summer-2026-rc.1`
 
 ## Broadcast scenes
 
