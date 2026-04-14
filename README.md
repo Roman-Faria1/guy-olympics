@@ -109,6 +109,12 @@ npm run dev
 - Run the checklist across admin, live board, and players routes
 - Restore your real backup when rehearsal is complete
 
+## Broadcast scenes
+
+- The live board now supports operator-facing scenes for overview, podium, spotlight, and schedule
+- Use the built-in controls on `/{competitionSlug}/live` to switch scenes, auto-rotate them, or enter fullscreen
+- You can also start a scene directly with query params such as `?scene=podium` or `?scene=spotlight&autoplay=1`
+
 ## Notes
 
 - The current implementation uses a file-backed store so the app works immediately without standing up Supabase.

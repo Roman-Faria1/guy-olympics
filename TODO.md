@@ -16,8 +16,8 @@ Current release-tag convention:
 - [x] Allow Supabase Storage image hosts in Next image config
 - [x] Wire Supabase Realtime into deployed clients so the live board updates faster than polling alone
 - [ ] Add stronger admin auth/rate limiting before wider sharing
-- [ ] Improve the broadcast/live presentation for stream day
-- [ ] Add fullscreen / scene-based broadcast modes for OBS and stream operators
+- [x] Improve the broadcast/live presentation for stream day
+- [x] Add fullscreen / scene-based broadcast modes for OBS and stream operators
 - [x] Restore from the new export format, not just the legacy HTML backup format
 - [x] Add an event-day QA checklist and seeded rehearsal flow
 
