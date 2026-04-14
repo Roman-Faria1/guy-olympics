@@ -213,7 +213,7 @@ export function AdminDashboard({
   }
 
   async function handlePlayerDelete(playerId: string) {
-    if (!window.confirm("Remove this player from active standings?")) {
+    if (!window.confirm("Remove this player and all of their scores from this competition?")) {
       return;
     }
 
@@ -231,6 +231,7 @@ export function AdminDashboard({
     }
 
     await refreshSnapshot();
+    setPlayerForm((current) => (current.id === playerId ? EMPTY_PLAYER_FORM : current));
     setToast("Player removed");
   }
 
@@ -846,7 +847,7 @@ export function AdminDashboard({
           <h2 className="section-title">Roster Cards</h2>
         </div>
         <div className="player-grid">
-          {snapshot.players.map((player) => (
+          {activePlayers.map((player) => (
             <div key={player.id}>
               <PlayerCard player={player} />
               <div className="button-row" style={{ marginTop: 12 }}>
