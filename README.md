@@ -12,6 +12,7 @@ A Next.js + TypeScript refactor of the original single-file Guy Olympics scoreke
   - `/{competitionSlug}/admin`
 - Shared cookie-based admin access with passcode
 - File-backed demo datastore in `.data/demo-db.json`
+- Automatic Supabase datastore support when env vars are configured
 - Legacy JSON import from the current `index.html` backup shape
 - Versioned export route for the new app format
 - Supabase-ready SQL schema in `supabase/migrations/0001_init.sql`
@@ -26,6 +27,24 @@ A Next.js + TypeScript refactor of the original single-file Guy Olympics scoreke
 
 - Competition slug: `summer-2026`
 - Admin passcode: `olympics`
+
+## Supabase setup
+
+1. In Supabase SQL Editor, run `supabase/migrations/0001_init.sql`
+2. Add these env vars locally and in Vercel:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+GO_SUPABASE_STORAGE_BUCKET=player-photos
+GO_ADMIN_SESSION_SECRET=
+```
+
+3. Create a public Storage bucket named `player-photos`
+
+The app will automatically use Supabase for data and uploads when `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are present. Without them, it falls back to the local demo store in `.data/demo-db.json`.
 
 ## Run locally
 
@@ -50,5 +69,5 @@ npm run dev
 
 - The current implementation uses a file-backed store so the app works immediately without standing up Supabase.
 - The schema, route contracts, and data model are aligned to the planned Supabase backend.
-- Player uploads are stored in `public/uploads/` in this local/demo version.
+- Player uploads go to Supabase Storage when configured, and fall back to `public/uploads/` in the local/demo version.
 - If you need to compare the old versions, use the files in `archive/` rather than the repo root.

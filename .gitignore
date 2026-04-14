@@ -4,5 +4,6 @@ node_modules
 .env.local
 coverage
 .codex
+tsconfig.tsbuildinfo
 public/uploads/*
 !.gitkeep

@@ -8,8 +8,25 @@ import {
   DEMO_COMPETITION_SLUG,
   DEMO_ADMIN_PASSCODE,
 } from "@/lib/constants";
+import { hasSupabaseServerConfig } from "@/lib/supabase";
 import { transformLegacyBackup } from "@/lib/legacy-import";
 import { buildLeaderboard, buildResultsByEventId } from "@/lib/scoring";
+import {
+  clearEventResultsSupabase,
+  deleteEventSupabase,
+  deletePlayerSupabase,
+  exportCompetitionBackupSupabase,
+  getCompetitionBySlugSupabase,
+  getCompetitionSnapshotSupabase,
+  importLegacyBackupSupabase,
+  listCompetitionsSupabase,
+  randomizePartnersSupabase,
+  reorderEventSupabase,
+  saveEventResultsSupabase,
+  setLiveEventSupabase,
+  upsertEventSupabase,
+  upsertPlayerSupabase,
+} from "@/lib/store/supabase-store";
 import type {
   AppBackup,
   CompetitionRecord,
@@ -25,6 +42,10 @@ import type {
 
 const DATA_DIR = path.join(process.cwd(), ".data");
 const DATA_FILE = path.join(DATA_DIR, "demo-db.json");
+
+function shouldUseSupabase() {
+  return hasSupabaseServerConfig();
+}
 
 function timestamp() {
   return new Date().toISOString();
@@ -154,6 +175,10 @@ function setSingleLiveEvent(events: Event[], liveEventId: string | null) {
 }
 
 export async function listCompetitions() {
+  if (shouldUseSupabase()) {
+    return listCompetitionsSupabase();
+  }
+
   const db = await readDb();
   return db.competitions.map((competition) => ({
     id: competition.id,
@@ -167,11 +192,19 @@ export async function listCompetitions() {
 }
 
 export async function getCompetitionBySlug(slug: string) {
+  if (shouldUseSupabase()) {
+    return getCompetitionBySlugSupabase(slug);
+  }
+
   const db = await readDb();
   return db.competitions.find((competition) => competition.slug === slug) ?? null;
 }
 
 export async function getCompetitionSnapshot(slug: string): Promise<CompetitionSnapshot | null> {
+  if (shouldUseSupabase()) {
+    return getCompetitionSnapshotSupabase(slug);
+  }
+
   const db = await readDb();
   const competition = db.competitions.find((item) => item.slug === slug);
   if (!competition) {
@@ -223,6 +256,10 @@ export async function upsertPlayer(
   slug: string,
   payload: Partial<PlayerProfile> & Pick<PlayerProfile, "name">,
 ) {
+  if (shouldUseSupabase()) {
+    return upsertPlayerSupabase(slug, payload);
+  }
+
   const db = await readDb();
   const competition = db.competitions.find((item) => item.slug === slug);
   if (!competition) {
@@ -272,19 +309,46 @@ export async function upsertPlayer(
 }
 
 export async function deletePlayer(slug: string, playerId: string) {
+  if (shouldUseSupabase()) {
+    return deletePlayerSupabase(slug, playerId);
+  }
+
   const db = await readDb();
   const competition = db.competitions.find((item) => item.slug === slug);
   if (!competition) {
     throw new Error("Competition not found");
   }
 
-  db.players = db.players.map((player) =>
-    player.id === playerId && player.competitionId === competition.id
-      ? {
-          ...player,
-          active: false,
-        }
-      : player,
+  const eventIds = new Set(
+    db.events
+      .filter((event) => event.competitionId === competition.id)
+      .map((event) => event.id),
+  );
+  const groupIds = new Set(
+    db.partnerGroups
+      .filter((group) => group.competitionId === competition.id)
+      .map((group) => group.id),
+  );
+
+  db.players = db.players.filter(
+    (player) => !(player.id === playerId && player.competitionId === competition.id),
+  );
+  db.results = db.results.filter(
+    (result) => !(result.playerId === playerId && eventIds.has(result.eventId)),
+  );
+  db.partnerGroupMembers = db.partnerGroupMembers.filter(
+    (member) => !(member.playerId === playerId && groupIds.has(member.partnerGroupId)),
+  );
+  const groupMemberCounts = new Map<string, number>();
+  for (const member of db.partnerGroupMembers) {
+    groupMemberCounts.set(
+      member.partnerGroupId,
+      (groupMemberCounts.get(member.partnerGroupId) ?? 0) + 1,
+    );
+  }
+  db.partnerGroups = db.partnerGroups.filter(
+    (group) =>
+      group.competitionId !== competition.id || (groupMemberCounts.get(group.id) ?? 0) > 0,
   );
 
   updateCompetitionTimestamp(db, competition.id);
@@ -295,6 +359,10 @@ export async function upsertEvent(
   slug: string,
   payload: Partial<Event> & Pick<Event, "name" | "kind">,
 ) {
+  if (shouldUseSupabase()) {
+    return upsertEventSupabase(slug, payload);
+  }
+
   const db = await readDb();
   const competition = db.competitions.find((item) => item.slug === slug);
   if (!competition) {
@@ -334,6 +402,10 @@ export async function reorderEvent(
   eventId: string,
   direction: "up" | "down",
 ) {
+  if (shouldUseSupabase()) {
+    return reorderEventSupabase(slug, eventId, direction);
+  }
+
   const db = await readDb();
   const competition = db.competitions.find((item) => item.slug === slug);
   if (!competition) {
@@ -372,6 +444,10 @@ export async function reorderEvent(
 }
 
 export async function deleteEvent(slug: string, eventId: string) {
+  if (shouldUseSupabase()) {
+    return deleteEventSupabase(slug, eventId);
+  }
+
   const db = await readDb();
   const competition = db.competitions.find((item) => item.slug === slug);
   if (!competition) {
@@ -404,6 +480,10 @@ function shuffle<T>(items: T[]) {
 }
 
 export async function randomizePartners(slug: string) {
+  if (shouldUseSupabase()) {
+    return randomizePartnersSupabase(slug);
+  }
+
   const db = await readDb();
   const competition = db.competitions.find((item) => item.slug === slug);
   if (!competition) {
@@ -468,6 +548,10 @@ export async function saveEventResults(
   eventId: string,
   placements: Array<{ playerId: string; placement: number }>,
 ) {
+  if (shouldUseSupabase()) {
+    return saveEventResultsSupabase(slug, eventId, placements);
+  }
+
   const db = await readDb();
   const competition = db.competitions.find((item) => item.slug === slug);
   const event = db.events.find((item) => item.id === eventId);
@@ -535,6 +619,10 @@ export async function saveEventResults(
 }
 
 export async function clearEventResults(slug: string, eventId: string) {
+  if (shouldUseSupabase()) {
+    return clearEventResultsSupabase(slug, eventId);
+  }
+
   const db = await readDb();
   const competition = db.competitions.find((item) => item.slug === slug);
   if (!competition) {
@@ -556,6 +644,10 @@ export async function clearEventResults(slug: string, eventId: string) {
 }
 
 export async function setLiveEvent(slug: string, eventId: string | null) {
+  if (shouldUseSupabase()) {
+    return setLiveEventSupabase(slug, eventId);
+  }
+
   const db = await readDb();
   const competition = db.competitions.find((item) => item.slug === slug);
   if (!competition) {
@@ -568,6 +660,10 @@ export async function setLiveEvent(slug: string, eventId: string | null) {
 }
 
 export async function exportCompetitionBackup(slug: string): Promise<AppBackup> {
+  if (shouldUseSupabase()) {
+    return exportCompetitionBackupSupabase(slug);
+  }
+
   const snapshot = await getCompetitionSnapshot(slug);
   if (!snapshot) {
     throw new Error("Competition not found");
@@ -585,6 +681,10 @@ export async function exportCompetitionBackup(slug: string): Promise<AppBackup> 
 }
 
 export async function importLegacyBackup(slug: string, backup: LegacyBackup) {
+  if (shouldUseSupabase()) {
+    return importLegacyBackupSupabase(slug, backup);
+  }
+
   const db = await readDb();
   const competition = db.competitions.find((item) => item.slug === slug);
   if (!competition) {
