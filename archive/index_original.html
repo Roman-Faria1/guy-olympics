@@ -1,0 +1,1744 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guy Olympics 2025</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --gold: #f5c842;
+        --silver: #b0b8c1;
+        --bronze: #cd7f32;
+        --bg: #0a0a0a;
+        --surface: #141414;
+        --surface2: #1e1e1e;
+        --border: rgba(255, 255, 255, 0.08);
+        --text: #f0f0f0;
+        --muted: #666;
+        --red: #e05252;
+        --green: #52e07a;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+      header {
+        text-align: center;
+        padding: 3rem 1rem 2rem;
+        border-bottom: 1px solid var(--border);
+        background: linear-gradient(180deg, #1a1400 0%, var(--bg) 100%);
+      }
+      header .flame {
+        font-size: 2.5rem;
+        animation: flicker 1.5s infinite alternate;
+        display: inline-block;
+      }
+      @keyframes flicker {
+        0% {
+          transform: scaleY(1) rotate(-2deg);
+        }
+        100% {
+          transform: scaleY(1.1) rotate(2deg);
+        }
+      }
+      header h1 {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(3rem, 10vw, 6rem);
+        letter-spacing: 0.08em;
+        color: var(--gold);
+        line-height: 1;
+        text-shadow: 0 0 40px rgba(245, 200, 66, 0.3);
+      }
+      header .subtitle {
+        font-size: 0.85rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: 0.5rem;
+      }
+      nav {
+        display: flex;
+        justify-content: center;
+        gap: 4px;
+        padding: 1rem;
+        position: sticky;
+        top: 0;
+        background: rgba(10, 10, 10, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 100;
+        border-bottom: 1px solid var(--border);
+      }
+      nav button {
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 8px 16px;
+        background: none;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      nav button:hover {
+        color: var(--text);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+      nav button.active {
+        background: var(--gold);
+        color: #000;
+        border-color: var(--gold);
+        font-weight: 600;
+      }
+      main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+      }
+      .pane {
+        display: none;
+      }
+      .pane.active {
+        display: block;
+      }
+      .section-header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+      }
+      .section-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 2rem;
+        letter-spacing: 0.06em;
+        color: var(--gold);
+      }
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+      }
+      .card-label {
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 0.75rem;
+      }
+      input[type="text"],
+      input[type="number"],
+      textarea,
+      select {
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.9rem;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        color: var(--text);
+        border-radius: 4px;
+        padding: 8px 12px;
+        outline: none;
+        transition: border-color 0.15s;
+      }
+      input[type="text"]:focus,
+      input[type="number"]:focus,
+      textarea:focus,
+      select:focus {
+        border-color: var(--gold);
+      }
+      textarea {
+        resize: vertical;
+        min-height: 60px;
+        width: 100%;
+      }
+      select option {
+        background: var(--surface2);
+      }
+      .btn {
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        padding: 9px 18px;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .btn-gold {
+        background: var(--gold);
+        color: #000;
+      }
+      .btn-gold:hover {
+        background: #ffd740;
+        transform: translateY(-1px);
+      }
+      .btn-outline {
+        background: none;
+        border: 1px solid var(--border);
+        color: var(--text);
+      }
+      .btn-outline:hover {
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+      .btn-sm {
+        font-size: 0.75rem;
+        padding: 6px 12px;
+      }
+      .players-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1rem;
+      }
+      .player-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1rem;
+        position: relative;
+        transition: border-color 0.15s;
+      }
+      .player-card:hover {
+        border-color: rgba(245, 200, 66, 0.3);
+      }
+      .player-card .remove-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: none;
+        border: none;
+        color: var(--muted);
+        font-size: 1rem;
+        cursor: pointer;
+        line-height: 1;
+        padding: 2px 6px;
+      }
+      .player-card .remove-btn:hover {
+        color: var(--red);
+      }
+      .player-field {
+        margin-bottom: 8px;
+      }
+      .player-field label {
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        display: block;
+        margin-bottom: 3px;
+      }
+      .player-field input,
+      .player-field textarea {
+        width: 100%;
+      }
+      .photo-upload-area {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 14px;
+      }
+      .photo-preview {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: var(--surface2);
+        border: 2px dashed var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        flex-shrink: 0;
+        cursor: pointer;
+        transition: border-color 0.15s;
+        font-size: 1.8rem;
+      }
+      .photo-preview:hover {
+        border-color: var(--gold);
+      }
+      .photo-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .photo-upload-label {
+        font-size: 0.8rem;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .photo-upload-label span {
+        color: var(--gold);
+        cursor: pointer;
+      }
+      .photo-upload-label span:hover {
+        text-decoration: underline;
+      }
+      .events-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .event-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 10px 14px;
+      }
+      .event-type-badge {
+        font-size: 0.65rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 3px 8px;
+        border-radius: 3px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .badge-individual {
+        background: rgba(82, 224, 122, 0.15);
+        color: var(--green);
+      }
+      .badge-team {
+        background: rgba(245, 200, 66, 0.15);
+        color: var(--gold);
+      }
+      .event-name {
+        flex: 1;
+        font-size: 0.95rem;
+        font-weight: 500;
+      }
+      .event-num {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.1rem;
+        color: var(--muted);
+        min-width: 24px;
+      }
+      .score-event-select {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 8px;
+        margin-bottom: 1.5rem;
+      }
+      .event-select-btn {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 12px;
+        cursor: pointer;
+        text-align: left;
+        transition: all 0.15s;
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+      }
+      .event-select-btn:hover {
+        border-color: rgba(245, 200, 66, 0.4);
+      }
+      .event-select-btn.selected {
+        border-color: var(--gold);
+        background: rgba(245, 200, 66, 0.08);
+      }
+      .event-select-btn .esb-name {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      .event-select-btn .esb-type {
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .event-select-btn .esb-done {
+        font-size: 0.7rem;
+        color: var(--green);
+        margin-top: 4px;
+      }
+      .score-entry-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 10px;
+        margin-bottom: 1rem;
+      }
+      .score-player-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .score-player-card .spc-name {
+        font-size: 0.9rem;
+        font-weight: 500;
+        flex: 1;
+      }
+      .score-player-card input[type="number"] {
+        width: 56px;
+        text-align: center;
+      }
+      .podium {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        padding: 1rem 0;
+      }
+      .podium-spot {
+        text-align: center;
+        flex: 1;
+        max-width: 180px;
+      }
+      .podium-name {
+        font-weight: 600;
+        font-size: 0.95rem;
+        margin-bottom: 2px;
+      }
+      .podium-pts {
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      .podium-block {
+        border-radius: 6px 6px 0 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 2rem;
+      }
+      .podium-1 .podium-block {
+        height: 90px;
+        background: rgba(245, 200, 66, 0.2);
+        border: 1px solid var(--gold);
+        color: var(--gold);
+      }
+      .podium-2 .podium-block {
+        height: 65px;
+        background: rgba(176, 184, 193, 0.15);
+        border: 1px solid var(--silver);
+        color: var(--silver);
+      }
+      .podium-3 .podium-block {
+        height: 45px;
+        background: rgba(205, 127, 50, 0.15);
+        border: 1px solid var(--bronze);
+        color: var(--bronze);
+      }
+      .lb-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+      }
+      .lb-table th {
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        padding: 8px 12px;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+      }
+      .lb-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: middle;
+      }
+      .lb-table tr:last-child td {
+        border-bottom: none;
+      }
+      .lb-table tr:hover td {
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .lb-rank {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.2rem;
+        color: var(--muted);
+      }
+      .lb-name {
+        font-weight: 600;
+      }
+      .lb-total {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.3rem;
+        color: var(--gold);
+      }
+      .event-pts {
+        display: inline-block;
+        font-size: 0.75rem;
+        padding: 2px 6px;
+        border-radius: 3px;
+        margin: 2px;
+      }
+      .pts-5 {
+        background: rgba(245, 200, 66, 0.2);
+        color: var(--gold);
+      }
+      .pts-4 {
+        background: rgba(176, 184, 193, 0.15);
+        color: var(--silver);
+      }
+      .pts-3 {
+        background: rgba(205, 127, 50, 0.15);
+        color: var(--bronze);
+      }
+      .pts-low {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--muted);
+      }
+      .profiles-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1rem;
+      }
+      .profile-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 1.25rem;
+        text-align: center;
+        transition:
+          transform 0.15s,
+          border-color 0.15s;
+      }
+      .profile-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(245, 200, 66, 0.3);
+      }
+      .profile-name {
+        font-weight: 600;
+        font-size: 1.05rem;
+        margin-bottom: 2px;
+      }
+      .profile-pts {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.8rem;
+        color: var(--gold);
+        line-height: 1;
+        margin-bottom: 4px;
+      }
+      .profile-pts-label {
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 0.75rem;
+      }
+      .profile-fact {
+        font-size: 0.8rem;
+        color: var(--muted);
+        font-style: italic;
+        border-top: 1px solid var(--border);
+        padding-top: 0.75rem;
+        margin-top: 0.75rem;
+      }
+      .scoring-legend {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+      }
+      .score-pill {
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 20px;
+      }
+      .partner-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+      }
+      .partner-table th {
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        padding: 8px 12px;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+      }
+      .partner-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--border);
+      }
+      .partner-table tr:last-child td {
+        border-bottom: none;
+      }
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--gold);
+        color: #000;
+        font-weight: 600;
+        font-size: 0.85rem;
+        padding: 10px 20px;
+        border-radius: 6px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        pointer-events: none;
+        z-index: 999;
+      }
+      .toast.show {
+        opacity: 1;
+      }
+      @media (max-width: 600px) {
+        nav button {
+          padding: 7px 10px;
+          font-size: 0.72rem;
+        }
+        .podium {
+          gap: 0.5rem;
+        }
+      }
+      .divider {
+        height: 1px;
+        background: var(--border);
+        margin: 1.5rem 0;
+      }
+      .flex-row {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="flame">🔥</div>
+      <h1>Guy Olympics</h1>
+      <p class="subtitle">
+        Summer 2025 &nbsp;·&nbsp; 11 Events &nbsp;·&nbsp; One Champion
+      </p>
+    </header>
+
+    <nav>
+      <button class="active" onclick="switchPane('setup', this)">Setup</button>
+      <button onclick="switchPane('events', this)">Events</button>
+      <button onclick="switchPane('scores', this)">Scores</button>
+      <button onclick="switchPane('board', this)">Leaderboard</button>
+      <button onclick="switchPane('profiles', this)">Profiles</button>
+    </nav>
+
+    <main>
+      <!-- SETUP -->
+      <div id="pane-setup" class="pane active">
+        <div class="section-header">
+          <span class="section-title">Roster</span>
+          <button class="btn btn-gold btn-sm" onclick="openAddPlayer()">
+            + Add Player
+          </button>
+        </div>
+
+        <div id="add-player-form" style="display: none" class="card">
+          <div class="card-label">New Player</div>
+
+          <div class="photo-upload-area">
+            <div
+              class="photo-preview"
+              id="photo-preview-circle"
+              onclick="document.getElementById('np-photo').click()"
+            >
+              📷
+            </div>
+            <div class="photo-upload-label">
+              <span onclick="document.getElementById('np-photo').click()"
+                >Upload a photo</span
+              >
+              for the roster card.<br />
+              Square crop looks best. Tap the circle to pick.
+            </div>
+            <input
+              type="file"
+              id="np-photo"
+              accept="image/*"
+              style="display: none"
+              onchange="handlePhotoUpload(event)"
+            />
+          </div>
+
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 10px;
+              margin-bottom: 10px;
+            "
+          >
+            <div class="player-field">
+              <label>Name *</label
+              ><input
+                type="text"
+                id="np-name"
+                placeholder="First name"
+                style="width: 100%"
+              />
+            </div>
+            <div class="player-field">
+              <label>Nickname / Alias</label
+              ><input
+                type="text"
+                id="np-nick"
+                placeholder="What do the boys call you"
+                style="width: 100%"
+              />
+            </div>
+          </div>
+
+          <div
+            style="
+              border-top: 1px solid var(--border);
+              padding-top: 10px;
+              margin-bottom: 10px;
+            "
+          >
+            <div class="card-label" style="margin-bottom: 8px">
+              Scouting Report — Physical
+            </div>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 10px;
+              "
+            >
+              <div class="player-field">
+                <label>Height</label
+                ><input
+                  type="text"
+                  id="np-height"
+                  placeholder="e.g. 6'1&quot;"
+                  style="width: 100%"
+                />
+              </div>
+              <div class="player-field">
+                <label>Weight (lbs)</label
+                ><input
+                  type="number"
+                  id="np-weight"
+                  placeholder="185"
+                  style="width: 100%"
+                />
+              </div>
+              <div class="player-field">
+                <label>Vertical (in)</label
+                ><input
+                  type="number"
+                  id="np-vertical"
+                  placeholder="24"
+                  style="width: 100%"
+                />
+              </div>
+              <div class="player-field">
+                <label>40-Yard Dash</label
+                ><input
+                  type="text"
+                  id="np-forty"
+                  placeholder="e.g. 4.8s"
+                  style="width: 100%"
+                />
+              </div>
+              <div class="player-field">
+                <label>Bench Press (reps)</label
+                ><input
+                  type="number"
+                  id="np-bench"
+                  placeholder="225 lbs x ?"
+                  style="width: 100%"
+                />
+              </div>
+              <div class="player-field">
+                <label>Grip Strength (lbs)</label
+                ><input
+                  type="number"
+                  id="np-grip"
+                  placeholder="Self-reported"
+                  style="width: 100%"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div
+            style="
+              border-top: 1px solid var(--border);
+              padding-top: 10px;
+              margin-bottom: 10px;
+            "
+          >
+            <div class="card-label" style="margin-bottom: 8px">
+              Scouting Report — Mental / Character
+            </div>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 10px;
+              "
+            >
+              <div class="player-field">
+                <label>Trash Talk Rating</label>
+                <select id="np-trash" style="width: 100%">
+                  <option value="">Select...</option>
+                  <option>Silent assassin</option>
+                  <option>Moderate yapper</option>
+                  <option>Certified menace</option>
+                  <option>Unhinged. Someone stop him</option>
+                </select>
+              </div>
+              <div class="player-field">
+                <label>Sore Loser Scale</label>
+                <select id="np-loser" style="width: 100%">
+                  <option value="">Select...</option>
+                  <option>Gracious, almost sus</option>
+                  <option>Mild sulk (5 min)</option>
+                  <option>Blames equipment</option>
+                  <option>Nuclear — do not engage</option>
+                </select>
+              </div>
+              <div class="player-field">
+                <label>Biggest Threat In</label
+                ><input
+                  type="text"
+                  id="np-threat"
+                  placeholder="e.g. Mario Kart"
+                  style="width: 100%"
+                />
+              </div>
+              <div class="player-field">
+                <label>Will Definitely Lose</label
+                ><input
+                  type="text"
+                  id="np-weakness"
+                  placeholder="e.g. Hot Dog Contest"
+                  style="width: 100%"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div
+            style="
+              border-top: 1px solid var(--border);
+              padding-top: 10px;
+              margin-bottom: 10px;
+            "
+          >
+            <div class="card-label" style="margin-bottom: 8px">
+              Fun Fact / Pre-Tournament Statement
+            </div>
+            <textarea
+              id="np-fact"
+              placeholder="Something the group will roast you for, or your official pre-tournament statement to the media..."
+            ></textarea>
+          </div>
+
+          <div class="flex-row">
+            <button class="btn btn-gold" onclick="addPlayer()">
+              Add to Roster
+            </button>
+            <button class="btn btn-outline" onclick="closeAddPlayer()">
+              Cancel
+            </button>
+          </div>
+        </div>
+
+        <div id="players-grid" class="players-grid"></div>
+
+        <div class="divider"></div>
+
+        <div class="section-header">
+          <span class="section-title">Partners</span>
+          <button class="btn btn-gold btn-sm" onclick="autoAssignPartners()">
+            ⚡ Random Draw
+          </button>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem">
+          Assign partners for the team events. Each pair earns the same points.
+        </p>
+        <div class="card">
+          <div class="card-label">Team Event Partner Pairs</div>
+          <div id="partner-display"></div>
+        </div>
+      </div>
+
+      <!-- EVENTS -->
+      <div id="pane-events" class="pane">
+        <div class="section-header">
+          <span class="section-title">The 11 Events</span>
+        </div>
+        <div class="scoring-legend">
+          <span class="score-pill pts-5">1st = 5 pts</span>
+          <span class="score-pill pts-4">2nd = 4 pts</span>
+          <span class="score-pill pts-3">3rd = 3 pts</span>
+          <span class="score-pill pts-low">4th = 2 pts</span>
+          <span class="score-pill pts-low">5th+ = 1 pt</span>
+        </div>
+        <div class="card" style="margin-bottom: 1.5rem">
+          <div class="card-label" style="color: var(--green)">
+            Individual Events
+          </div>
+          <div class="events-list" id="individual-events-list"></div>
+        </div>
+        <div class="card">
+          <div class="card-label" style="color: var(--gold)">
+            2v2 Partner Events
+          </div>
+          <div class="events-list" id="team-events-list"></div>
+        </div>
+      </div>
+
+      <!-- SCORES -->
+      <div id="pane-scores" class="pane">
+        <div class="section-header">
+          <span class="section-title">Log Scores</span>
+        </div>
+        <p
+          style="
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 1.25rem;
+          "
+        >
+          Select an event, enter each player's finishing place (1 = 1st), then
+          save.
+        </p>
+        <div class="score-event-select" id="score-event-select"></div>
+        <div id="score-entry-area" style="display: none">
+          <div class="divider"></div>
+          <div class="section-header">
+            <span
+              id="score-event-title"
+              class="section-title"
+              style="font-size: 1.4rem"
+            ></span>
+            <button class="btn btn-gold btn-sm" onclick="saveScores()">
+              Save Scores
+            </button>
+          </div>
+          <div class="score-entry-grid" id="score-entry-grid"></div>
+        </div>
+      </div>
+
+      <!-- LEADERBOARD -->
+      <div id="pane-board" class="pane">
+        <div class="section-header">
+          <span class="section-title">Standings</span>
+        </div>
+        <div id="podium-area" class="podium"></div>
+        <div class="card">
+          <table class="lb-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Player</th>
+                <th>Total</th>
+                <th>Event Breakdown</th>
+              </tr>
+            </thead>
+            <tbody id="lb-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PROFILES -->
+      <div id="pane-profiles" class="pane">
+        <div class="section-header">
+          <span class="section-title">Player Profiles</span>
+        </div>
+        <div id="profiles-grid" class="profiles-grid"></div>
+      </div>
+    </main>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      var COLORS = [
+        "#F5C842",
+        "#52e07a",
+        "#5bb8f5",
+        "#e052a0",
+        "#e07b52",
+        "#a052e0",
+        "#52e0d4",
+        "#e0d452",
+        "#e05252",
+        "#52a0e0",
+        "#80e052",
+        "#e052e0",
+      ];
+      var INDIVIDUAL = [
+        "Mario Kart",
+        "Wii Sports",
+        "Beer Die",
+        "Dizzy Bat Race",
+        "Wiffle Ball Home Run Derby",
+        "Hot Dog Eating Contest",
+      ];
+      var TEAM = [
+        "Cornhole",
+        "Beer Pong",
+        "Spikeball",
+        "Pickleball Doubles",
+        "Trivia",
+        "Flip Cup Relay",
+      ];
+      var ALL_EVENTS = INDIVIDUAL.concat(TEAM);
+      var PT_MAP = [5, 4, 3, 2, 1];
+      function pts(place) {
+        return PT_MAP[place - 1] !== undefined ? PT_MAP[place - 1] : 1;
+      }
+
+      var players = JSON.parse(localStorage.getItem("go_players") || "[]");
+      var scores = JSON.parse(localStorage.getItem("go_scores") || "{}");
+      var partners = JSON.parse(localStorage.getItem("go_partners") || "[]");
+      var selectedEvent = null;
+      var pendingPhoto = null;
+
+      function save() {
+        localStorage.setItem("go_players", JSON.stringify(players));
+        localStorage.setItem("go_scores", JSON.stringify(scores));
+        localStorage.setItem("go_partners", JSON.stringify(partners));
+      }
+
+      function showToast(msg) {
+        var t = document.getElementById("toast");
+        t.textContent = msg;
+        t.classList.add("show");
+        setTimeout(function () {
+          t.classList.remove("show");
+        }, 2200);
+      }
+
+      function getInitials(name) {
+        return name
+          .split(" ")
+          .map(function (w) {
+            return w[0];
+          })
+          .join("")
+          .toUpperCase()
+          .slice(0, 2);
+      }
+
+      function getColor(p) {
+        var i = players.indexOf(p);
+        return COLORS[i % COLORS.length];
+      }
+
+      // Renders either a photo or a colored-initials circle
+      function avatarEl(p, size) {
+        var s = size || 36;
+        if (p.photo) {
+          var img = document.createElement("img");
+          img.src = p.photo;
+          img.style.cssText =
+            "width:" +
+            s +
+            "px;height:" +
+            s +
+            "px;border-radius:50%;object-fit:cover;flex-shrink:0;display:inline-block;vertical-align:middle;";
+          return img;
+        }
+        var span = document.createElement("span");
+        span.textContent = getInitials(p.name);
+        span.style.cssText =
+          "width:" +
+          s +
+          "px;height:" +
+          s +
+          "px;border-radius:50%;background:" +
+          getColor(p) +
+          ';display:inline-flex;align-items:center;justify-content:center;font-family:"Bebas Neue",sans-serif;font-size:' +
+          Math.round(s * 0.38) +
+          "px;color:#000;flex-shrink:0;vertical-align:middle;";
+        return span;
+      }
+
+      // Injects an avatar into a container element
+      function injectAvatar(container, p, size) {
+        container.innerHTML = "";
+        container.appendChild(avatarEl(p, size));
+      }
+
+      function switchPane(p, btn) {
+        document.querySelectorAll(".pane").forEach(function (el) {
+          el.classList.remove("active");
+        });
+        document.querySelectorAll("nav button").forEach(function (b) {
+          b.classList.remove("active");
+        });
+        document.getElementById("pane-" + p).classList.add("active");
+        btn.classList.add("active");
+        if (p === "board") renderLeaderboard();
+        if (p === "profiles") renderProfiles();
+        if (p === "scores") renderScoreEventSelect();
+        if (p === "events") renderEventsList();
+        if (p === "setup") {
+          renderPlayers();
+          renderPartners();
+        }
+      }
+
+      // ---- PHOTO UPLOAD ----
+      function handlePhotoUpload(e) {
+        var file = e.target.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function (ev) {
+          var img = new Image();
+          img.onload = function () {
+            var canvas = document.createElement("canvas");
+            canvas.width = 200;
+            canvas.height = 200;
+            var ctx = canvas.getContext("2d");
+            var s = Math.min(img.width, img.height);
+            var ox = (img.width - s) / 2;
+            var oy = (img.height - s) / 2;
+            ctx.drawImage(img, ox, oy, s, s, 0, 0, 200, 200);
+            pendingPhoto = canvas.toDataURL("image/jpeg", 0.72);
+            var prev = document.getElementById("photo-preview-circle");
+            prev.innerHTML = "";
+            var pi = document.createElement("img");
+            pi.src = pendingPhoto;
+            pi.style.cssText = "width:100%;height:100%;object-fit:cover;";
+            prev.appendChild(pi);
+          };
+          img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      // ---- SETUP ----
+      function openAddPlayer() {
+        document.getElementById("add-player-form").style.display = "block";
+        document.getElementById("np-name").focus();
+      }
+
+      function closeAddPlayer() {
+        document.getElementById("add-player-form").style.display = "none";
+        [
+          "np-name",
+          "np-nick",
+          "np-fact",
+          "np-height",
+          "np-weight",
+          "np-vertical",
+          "np-forty",
+          "np-bench",
+          "np-grip",
+          "np-threat",
+          "np-weakness",
+        ].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) el.value = "";
+        });
+        document.getElementById("np-trash").value = "";
+        document.getElementById("np-loser").value = "";
+        pendingPhoto = null;
+        var prev = document.getElementById("photo-preview-circle");
+        prev.innerHTML = "📷";
+        document.getElementById("np-photo").value = "";
+      }
+
+      function addPlayer() {
+        var name = document.getElementById("np-name").value.trim();
+        if (!name) {
+          showToast("Enter a name!");
+          return;
+        }
+        players.push({
+          name: name,
+          nick: document.getElementById("np-nick").value.trim(),
+          fact: document.getElementById("np-fact").value.trim(),
+          height: document.getElementById("np-height").value.trim(),
+          weight: document.getElementById("np-weight").value.trim(),
+          vertical: document.getElementById("np-vertical").value.trim(),
+          forty: document.getElementById("np-forty").value.trim(),
+          bench: document.getElementById("np-bench").value.trim(),
+          grip: document.getElementById("np-grip").value.trim(),
+          trash: document.getElementById("np-trash").value,
+          loser: document.getElementById("np-loser").value,
+          threat: document.getElementById("np-threat").value.trim(),
+          weakness: document.getElementById("np-weakness").value.trim(),
+          photo: pendingPhoto || null,
+          id: Date.now(),
+        });
+        save();
+        closeAddPlayer();
+        renderPlayers();
+        showToast(name + " added to roster!");
+      }
+
+      function removePlayer(id) {
+        players = players.filter(function (p) {
+          return p.id !== id;
+        });
+        save();
+        renderPlayers();
+      }
+
+      function renderPlayers() {
+        var grid = document.getElementById("players-grid");
+        if (!players.length) {
+          grid.innerHTML =
+            '<p style="color:var(--muted);font-size:0.85rem;">No players yet. Add your guys above.</p>';
+          return;
+        }
+        grid.innerHTML = "";
+        players.forEach(function (p) {
+          var card = document.createElement("div");
+          card.className = "player-card";
+
+          // remove btn
+          var rb = document.createElement("button");
+          rb.className = "remove-btn";
+          rb.textContent = "×";
+          rb.onclick = function () {
+            removePlayer(p.id);
+          };
+          card.appendChild(rb);
+
+          // avatar
+          var av = document.createElement("div");
+          av.style.marginBottom = "0.75rem";
+          av.appendChild(avatarEl(p, 44));
+          card.appendChild(av);
+
+          // name
+          var nm = document.createElement("div");
+          nm.style.cssText =
+            "font-weight:600;font-size:0.95rem;margin-bottom:6px;";
+          nm.textContent = p.name;
+          if (p.nick) {
+            var ns = document.createElement("span");
+            ns.style.cssText = "color:var(--muted);font-weight:400;";
+            ns.textContent = ' "' + p.nick + '"';
+            nm.appendChild(ns);
+          }
+          card.appendChild(nm);
+
+          // physical tags
+          var phys = [
+            p.height ? "📏 " + p.height : "",
+            p.weight ? "⚖️ " + p.weight + " lbs" : "",
+            p.forty ? "💨 " + p.forty : "",
+            p.bench ? "🏋️ " + p.bench + " reps" : "",
+          ].filter(Boolean);
+          if (phys.length) {
+            var pt = document.createElement("div");
+            pt.style.cssText =
+              "display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px;";
+            phys.forEach(function (s) {
+              var tg = document.createElement("span");
+              tg.style.cssText =
+                "font-size:0.72rem;background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:2px 6px;color:var(--muted);";
+              tg.textContent = s;
+              pt.appendChild(tg);
+            });
+            card.appendChild(pt);
+          }
+
+          // intel tags
+          var intel = [
+            p.trash ? "🗣️ " + p.trash : "",
+            p.threat ? "🎯 Danger: " + p.threat : "",
+            p.weakness ? "💀 Toast: " + p.weakness : "",
+          ].filter(Boolean);
+          if (intel.length) {
+            var it = document.createElement("div");
+            it.style.cssText =
+              "display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px;";
+            intel.forEach(function (s) {
+              var tg = document.createElement("span");
+              tg.style.cssText =
+                "font-size:0.72rem;background:var(--surface2);border:1px solid var(--border);border-radius:3px;padding:2px 6px;color:var(--muted);";
+              tg.textContent = s;
+              it.appendChild(tg);
+            });
+            card.appendChild(it);
+          }
+
+          // fact
+          if (p.fact) {
+            var fc = document.createElement("div");
+            fc.style.cssText =
+              "font-size:0.78rem;color:var(--muted);margin-top:4px;font-style:italic;border-top:1px solid var(--border);padding-top:6px;";
+            fc.textContent = '"' + p.fact + '"';
+            card.appendChild(fc);
+          }
+
+          grid.appendChild(card);
+        });
+      }
+
+      function autoAssignPartners() {
+        if (players.length < 2) {
+          showToast("Need at least 2 players!");
+          return;
+        }
+        var shuffled = players.slice().sort(function () {
+          return Math.random() - 0.5;
+        });
+        partners = [];
+        for (var i = 0; i < shuffled.length - 1; i += 2) {
+          partners.push([shuffled[i].id, shuffled[i + 1].id]);
+        }
+        if (shuffled.length % 2 !== 0) {
+          partners[partners.length - 1].push(shuffled[shuffled.length - 1].id);
+        }
+        save();
+        renderPartners();
+        showToast("Partners randomly assigned!");
+      }
+
+      function renderPartners() {
+        var el = document.getElementById("partner-display");
+        if (!partners.length) {
+          el.innerHTML =
+            '<p style="font-size:0.85rem;color:var(--muted);">No partners assigned yet. Add players then hit Random Draw.</p>';
+          return;
+        }
+        var tbl = document.createElement("table");
+        tbl.className = "partner-table";
+        var hasThird = players.length % 2 !== 0;
+        tbl.innerHTML =
+          "<thead><tr><th>#</th><th>Partner A</th><th>Partner B</th>" +
+          (hasThird ? "<th>Partner C</th>" : "") +
+          "</tr></thead>";
+        var tbody = document.createElement("tbody");
+        partners.forEach(function (pair, idx) {
+          var tr = document.createElement("tr");
+          var numTd = document.createElement("td");
+          numTd.style.cssText =
+            'color:var(--muted);font-family:"Bebas Neue",sans-serif;font-size:1.1rem;';
+          numTd.textContent = idx + 1;
+          tr.appendChild(numTd);
+          pair.forEach(function (pid) {
+            var p = players.find(function (x) {
+              return x.id === pid;
+            });
+            var td = document.createElement("td");
+            if (p) {
+              var wrap = document.createElement("span");
+              wrap.style.cssText =
+                "display:inline-flex;align-items:center;gap:8px;";
+              wrap.appendChild(avatarEl(p, 28));
+              var nm = document.createElement("span");
+              nm.textContent = p.name;
+              wrap.appendChild(nm);
+              td.appendChild(wrap);
+            }
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
+        });
+        tbl.appendChild(tbody);
+        el.innerHTML = "";
+        el.appendChild(tbl);
+      }
+
+      // ---- EVENTS ----
+      function renderEventsList() {
+        var ind = document.getElementById("individual-events-list");
+        var team = document.getElementById("team-events-list");
+        ind.innerHTML = INDIVIDUAL.map(function (e, i) {
+          return (
+            '<div class="event-row"><span class="event-num">0' +
+            (i + 1) +
+            '</span><span class="event-name">' +
+            e +
+            '</span><span class="event-type-badge badge-individual">Individual</span></div>'
+          );
+        }).join("");
+        team.innerHTML = TEAM.map(function (e, i) {
+          return (
+            '<div class="event-row"><span class="event-num">0' +
+            (i + 7) +
+            '</span><span class="event-name">' +
+            e +
+            '</span><span class="event-type-badge badge-team">2v2 Partner</span></div>'
+          );
+        }).join("");
+      }
+
+      // ---- SCORES ----
+      function renderScoreEventSelect() {
+        var el = document.getElementById("score-event-select");
+        el.innerHTML = ALL_EVENTS.map(function (e) {
+          var done = scores[e] && Object.keys(scores[e]).length > 0;
+          var isTeam = TEAM.indexOf(e) !== -1;
+          return (
+            '<button class="event-select-btn' +
+            (selectedEvent === e ? " selected" : "") +
+            '" onclick="selectEvent(\'' +
+            e +
+            "')\">" +
+            '<div class="esb-name">' +
+            e +
+            "</div>" +
+            '<div class="esb-type">' +
+            (isTeam ? "2v2 Partner" : "Individual") +
+            "</div>" +
+            (done ? '<div class="esb-done">✓ Scored</div>' : "") +
+            "</button>"
+          );
+        }).join("");
+      }
+
+      function selectEvent(e) {
+        selectedEvent = e;
+        renderScoreEventSelect();
+        var area = document.getElementById("score-entry-area");
+        area.style.display = "block";
+        document.getElementById("score-event-title").textContent = e;
+        var grid = document.getElementById("score-entry-grid");
+        var existing = scores[e] || {};
+        if (!players.length) {
+          grid.innerHTML =
+            '<p style="color:var(--muted);font-size:0.85rem;">Add players in Setup first.</p>';
+          return;
+        }
+        grid.innerHTML = "";
+        players.forEach(function (p) {
+          var card = document.createElement("div");
+          card.className = "score-player-card";
+          card.appendChild(avatarEl(p, 36));
+          var nm = document.createElement("span");
+          nm.className = "spc-name";
+          nm.textContent = p.name;
+          card.appendChild(nm);
+          var inp = document.createElement("input");
+          inp.type = "number";
+          inp.min = 1;
+          inp.max = players.length;
+          inp.value = existing[p.id] || "";
+          inp.placeholder = "#";
+          inp.id = "place-" + p.id;
+          card.appendChild(inp);
+          grid.appendChild(card);
+        });
+      }
+
+      function saveScores() {
+        if (!selectedEvent) return;
+        scores[selectedEvent] = {};
+        players.forEach(function (p) {
+          var inp = document.getElementById("place-" + p.id);
+          var v = parseInt(inp.value);
+          if (!isNaN(v) && v > 0) scores[selectedEvent][p.id] = v;
+        });
+        if (TEAM.indexOf(selectedEvent) !== -1) {
+          partners.forEach(function (pair) {
+            var places = pair
+              .map(function (id) {
+                return scores[selectedEvent][id];
+              })
+              .filter(function (v) {
+                return v !== undefined;
+              });
+            if (places.length) {
+              var best = Math.min.apply(null, places);
+              pair.forEach(function (id) {
+                scores[selectedEvent][id] = best;
+              });
+            }
+          });
+        }
+        save();
+        renderScoreEventSelect();
+        showToast("Scores saved for " + selectedEvent + "!");
+      }
+
+      // ---- LEADERBOARD ----
+      function getTotals() {
+        var totals = {},
+          breakdown = {};
+        players.forEach(function (p) {
+          totals[p.id] = 0;
+          breakdown[p.id] = {};
+        });
+        ALL_EVENTS.forEach(function (ev) {
+          var sc = scores[ev] || {};
+          Object.keys(sc).forEach(function (id) {
+            var numId = parseInt(id);
+            if (totals[numId] !== undefined) {
+              var p2 = pts(sc[id]);
+              totals[numId] += p2;
+              breakdown[numId][ev] = p2;
+            }
+          });
+        });
+        return { totals: totals, breakdown: breakdown };
+      }
+
+      function renderLeaderboard() {
+        var res = getTotals();
+        var totals = res.totals,
+          breakdown = res.breakdown;
+        var sorted = players.slice().sort(function (a, b) {
+          return totals[b.id] - totals[a.id];
+        });
+        var podium = document.getElementById("podium-area");
+        var body = document.getElementById("lb-body");
+
+        if (!players.length) {
+          podium.innerHTML = "";
+          body.innerHTML =
+            '<tr><td colspan="4" style="color:var(--muted);font-size:0.85rem;padding:1rem;">Add players in Setup to see standings.</td></tr>';
+          return;
+        }
+
+        // Podium
+        var top3 = sorted.slice(0, 3);
+        var order =
+          top3.length >= 2 ? [top3[1], top3[0], top3[2]].filter(Boolean) : top3;
+        var cls =
+          top3.length >= 2
+            ? ["podium-2", "podium-1", "podium-3"]
+            : ["podium-1"];
+        podium.innerHTML = "";
+        order.forEach(function (p, i) {
+          var rank = sorted.indexOf(p) + 1;
+          var spot = document.createElement("div");
+          spot.className = "podium-spot " + (cls[i] || "podium-3");
+
+          var avWrap = document.createElement("div");
+          avWrap.style.cssText =
+            "display:flex;justify-content:center;margin-bottom:8px;";
+          avWrap.appendChild(avatarEl(p, 56));
+          spot.appendChild(avWrap);
+
+          var nm = document.createElement("div");
+          nm.className = "podium-name";
+          nm.textContent = p.nick || p.name;
+          spot.appendChild(nm);
+          var pt = document.createElement("div");
+          pt.className = "podium-pts";
+          pt.textContent = totals[p.id] + " pts";
+          spot.appendChild(pt);
+          var bl = document.createElement("div");
+          bl.className = "podium-block";
+          bl.textContent = rank;
+          spot.appendChild(bl);
+          podium.appendChild(spot);
+        });
+
+        // Table
+        body.innerHTML = "";
+        sorted.forEach(function (p, i) {
+          var bd = breakdown[p.id];
+          var tr = document.createElement("tr");
+
+          var rankTd = document.createElement("td");
+          rankTd.className = "lb-rank";
+          rankTd.textContent = i + 1;
+          tr.appendChild(rankTd);
+
+          var nameTd = document.createElement("td");
+          nameTd.className = "lb-name";
+          var wrap = document.createElement("span");
+          wrap.style.cssText =
+            "display:inline-flex;align-items:center;gap:10px;";
+          wrap.appendChild(avatarEl(p, 32));
+          var nspan = document.createElement("span");
+          nspan.textContent = p.name;
+          if (p.nick) {
+            var nk = document.createElement("span");
+            nk.style.cssText =
+              "color:var(--muted);font-weight:400;font-size:0.8rem;";
+            nk.textContent = ' "' + p.nick + '"';
+            nspan.appendChild(nk);
+          }
+          wrap.appendChild(nspan);
+          nameTd.appendChild(wrap);
+          tr.appendChild(nameTd);
+
+          var totTd = document.createElement("td");
+          totTd.className = "lb-total";
+          totTd.textContent = totals[p.id];
+          tr.appendChild(totTd);
+
+          var bkTd = document.createElement("td");
+          bkTd.style.fontSize = "0.78rem";
+          var pills = ALL_EVENTS.map(function (ev) {
+            if (bd[ev] === undefined) return "";
+            var c =
+              bd[ev] >= 5
+                ? "pts-5"
+                : bd[ev] >= 4
+                  ? "pts-4"
+                  : bd[ev] >= 3
+                    ? "pts-3"
+                    : "pts-low";
+            return (
+              '<span class="event-pts ' +
+              c +
+              '" title="' +
+              ev +
+              '">' +
+              ev.split(" ")[0] +
+              " +" +
+              bd[ev] +
+              "</span>"
+            );
+          }).join("");
+          bkTd.innerHTML =
+            pills || '<span style="color:var(--muted)">No events scored</span>';
+          tr.appendChild(bkTd);
+
+          body.appendChild(tr);
+        });
+      }
+
+      // ---- PROFILES ----
+      function renderProfiles() {
+        var res = getTotals();
+        var totals = res.totals,
+          breakdown = res.breakdown;
+        var grid = document.getElementById("profiles-grid");
+        if (!players.length) {
+          grid.innerHTML =
+            '<p style="color:var(--muted);font-size:0.85rem;">Add players in Setup.</p>';
+          return;
+        }
+        var sorted = players.slice().sort(function (a, b) {
+          return totals[b.id] - totals[a.id];
+        });
+        grid.innerHTML = "";
+        sorted.forEach(function (p, rank) {
+          var bd = breakdown[p.id];
+          var eventsPlayed = Object.keys(bd).length;
+          var best = Object.keys(bd).sort(function (a, b) {
+            return bd[b] - bd[a];
+          })[0];
+
+          var card = document.createElement("div");
+          card.className = "profile-card";
+
+          var avWrap = document.createElement("div");
+          avWrap.style.cssText =
+            "display:flex;justify-content:center;margin-bottom:0.75rem;";
+          avWrap.appendChild(avatarEl(p, 72));
+          card.appendChild(avWrap);
+
+          var nm = document.createElement("div");
+          nm.className = "profile-name";
+          nm.textContent = p.name;
+          if (p.nick) {
+            var nk = document.createElement("div");
+            nk.style.cssText =
+              "color:var(--muted);font-weight:400;font-size:0.8rem;";
+            nk.textContent = '"' + p.nick + '"';
+            nm.appendChild(nk);
+          }
+          card.appendChild(nm);
+
+          var pt = document.createElement("div");
+          pt.className = "profile-pts";
+          pt.textContent = totals[p.id];
+          card.appendChild(pt);
+          var pl = document.createElement("div");
+          pl.className = "profile-pts-label";
+          pl.textContent = "total points · rank #" + (rank + 1);
+          card.appendChild(pl);
+
+          var sub = document.createElement("div");
+          sub.style.cssText =
+            "font-size:0.75rem;color:var(--muted);margin-bottom:0.75rem;";
+          sub.textContent =
+            eventsPlayed +
+            " event" +
+            (eventsPlayed !== 1 ? "s" : "") +
+            " competed" +
+            (best
+              ? " · best: " + best.split(" ")[0] + " (+" + bd[best] + ")"
+              : "");
+          card.appendChild(sub);
+
+          var statRows = [
+            ["Height", p.height],
+            ["Weight", p.weight ? p.weight + " lbs" : ""],
+            ["Vertical", p.vertical ? p.vertical + '"' : ""],
+            ["40-Yard", p.forty],
+            ["Bench", p.bench ? p.bench + " reps @ 225" : ""],
+            ["Grip", p.grip ? p.grip + " lbs" : ""],
+          ].filter(function (r) {
+            return r[1];
+          });
+          var scoutRows = [
+            ["Trash Talk", p.trash],
+            ["Sore Loser", p.loser],
+            ["Watch Out For", p.threat],
+            ["Will Fold In", p.weakness],
+          ].filter(function (r) {
+            return r[1];
+          });
+
+          function makeStatSection(label, rows) {
+            var wrap = document.createElement("div");
+            wrap.style.cssText =
+              "border-top:1px solid var(--border);padding-top:10px;margin-bottom:8px;text-align:left;";
+            var lbl = document.createElement("div");
+            lbl.style.cssText =
+              "font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;";
+            lbl.textContent = label;
+            wrap.appendChild(lbl);
+            rows.forEach(function (r) {
+              var row = document.createElement("div");
+              row.style.cssText =
+                "display:flex;justify-content:space-between;align-items:flex-start;gap:8px;font-size:0.78rem;padding:3px 0;border-bottom:1px solid var(--border);";
+              var k = document.createElement("span");
+              k.style.cssText = "color:var(--muted);white-space:nowrap;";
+              k.textContent = r[0];
+              var v = document.createElement("span");
+              v.style.cssText = "font-weight:500;text-align:right;";
+              v.textContent = r[1];
+              row.appendChild(k);
+              row.appendChild(v);
+              wrap.appendChild(row);
+            });
+            return wrap;
+          }
+          if (statRows.length)
+            card.appendChild(makeStatSection("Physical", statRows));
+          if (scoutRows.length)
+            card.appendChild(makeStatSection("Intel", scoutRows));
+
+          if (p.fact) {
+            var fc = document.createElement("div");
+            fc.className = "profile-fact";
+            fc.textContent = '"' + p.fact + '"';
+            card.appendChild(fc);
+          }
+          grid.appendChild(card);
+        });
+      }
+
+      // INIT
+      renderPlayers();
+      renderPartners();
+      renderEventsList();
+    </script>
+  </body>
+</html>
