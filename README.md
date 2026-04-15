@@ -90,6 +90,7 @@ Admin auth notes:
 - `GO_ADMIN_SESSION_SECRET` is required in production
 - admin sessions expire after 12 hours
 - failed login attempts are rate limited by IP/competition slug
+- use [ADMIN_PASSCODE.md](/home/roman/dev-env/guy_olympics/ADMIN_PASSCODE.md) to rotate the shared admin passcode or clear a login cooldown
 
 ## Run locally
 
