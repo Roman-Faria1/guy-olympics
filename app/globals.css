@@ -632,6 +632,15 @@ main {
   box-shadow: 0 0 18px rgba(255, 107, 107, 0.75);
 }
 
+.broadcast-control-note {
+  margin: 0;
+  max-width: 320px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  text-align: right;
+}
+
 .broadcast-hero {
   padding: 32px;
   background:
@@ -920,6 +929,11 @@ main {
   .section-row {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .broadcast-control-note {
+    max-width: none;
+    text-align: left;
   }
 }
 

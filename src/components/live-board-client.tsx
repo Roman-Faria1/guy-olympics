@@ -27,6 +27,7 @@ export function LiveBoardClient({
   const searchParams = useSearchParams();
   const mainRef = useRef<HTMLElement | null>(null);
   const [snapshot] = useCompetitionSnapshot(competitionSlug, initialSnapshot, 3000);
+  const [isMobileBroadcast, setIsMobileBroadcast] = useState(false);
   const [scene, setScene] = useState<BroadcastScene>(() => {
     const requested = searchParams.get("scene");
     return SCENES.some((entry) => entry.id === requested)
@@ -35,6 +36,7 @@ export function LiveBoardClient({
   });
   const [autoRotate, setAutoRotate] = useState(searchParams.get("autoplay") === "1");
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const autoRotateEnabled = autoRotate && !isMobileBroadcast;
   const topThree = useMemo(() => snapshot.leaderboard.slice(0, 3), [snapshot.leaderboard]);
   const liveEvent = snapshot.events.find((event) => event.status === "live") ?? null;
   const nextEvent =
@@ -54,6 +56,15 @@ export function LiveBoardClient({
   const sceneMeta = SCENES.find((entry) => entry.id === scene) ?? SCENES[0];
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 820px), (pointer: coarse)");
+    const syncViewportMode = () => setIsMobileBroadcast(mediaQuery.matches);
+
+    syncViewportMode();
+    mediaQuery.addEventListener("change", syncViewportMode);
+    return () => mediaQuery.removeEventListener("change", syncViewportMode);
+  }, []);
+
+  useEffect(() => {
     function handleFullscreenChange() {
       setIsFullscreen(document.fullscreenElement === mainRef.current);
     }
@@ -64,7 +75,7 @@ export function LiveBoardClient({
   }, []);
 
   useEffect(() => {
-    if (!autoRotate) {
+    if (!autoRotateEnabled) {
       return undefined;
     }
 
@@ -76,7 +87,7 @@ export function LiveBoardClient({
     }, 12000);
 
     return () => window.clearInterval(timer);
-  }, [autoRotate]);
+  }, [autoRotateEnabled]);
 
   async function toggleFullscreen() {
     if (!mainRef.current) {
@@ -122,16 +133,24 @@ export function LiveBoardClient({
           ))}
         </div>
         <div className="inline-actions">
-          <button
-            className={`ghost-button ${autoRotate ? "broadcast-control-active" : ""}`}
-            onClick={() => setAutoRotate((current) => !current)}
-            type="button"
-          >
-            {autoRotate ? "Stop Rotation" : "Auto Rotate"}
-          </button>
-          <button className="ghost-button" onClick={toggleFullscreen} type="button">
-            {isFullscreen ? "Exit Fullscreen" : "Go Fullscreen"}
-          </button>
+          {!isMobileBroadcast ? (
+            <>
+              <button
+                className={`ghost-button ${autoRotate ? "broadcast-control-active" : ""}`}
+                onClick={() => setAutoRotate((current) => !current)}
+                type="button"
+              >
+                {autoRotateEnabled ? "Stop Rotation" : "Auto Rotate"}
+              </button>
+              <button className="ghost-button" onClick={toggleFullscreen} type="button">
+                {isFullscreen ? "Exit Fullscreen" : "Go Fullscreen"}
+              </button>
+            </>
+          ) : (
+            <p className="broadcast-control-note">
+              Use your phone&apos;s browser controls for fullscreen and orientation.
+            </p>
+          )}
         </div>
       </section>
 
