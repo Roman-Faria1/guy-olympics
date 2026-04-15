@@ -1,14 +1,14 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Rehearsal Kit",
+  title: "Event Runbook",
 };
 
 const checklist = [
-  "Export the current competition state before importing the rehearsal seed.",
-  "Import the seeded backup from the admin page and wait for the roster, events, and scores to refresh.",
+  "Export the current competition state before loading the rehearsal backup.",
+  "Import the rehearsal backup from the admin page and wait for the roster, events, and scores to refresh.",
   "Open the admin console, live board, and players page in separate tabs or devices.",
-  "Verify the current live event, leaderboard, and player scouting cards all match the seeded scenario.",
+  "Verify the current live event, leaderboard, and player scouting cards all match the rehearsal scenario.",
   "Edit one player, update one event name, redraw partners, and save scores for the live event.",
   "Confirm the live board updates quickly on the second screen without a manual refresh.",
   "Upload one replacement player photo and confirm it renders on both admin and public pages.",
@@ -26,14 +26,14 @@ export default function RehearsalPage() {
   return (
     <main className="landing-shell">
       <section className="hero-panel">
-        <p className="eyebrow">Event-Day QA</p>
-        <h1>Rehearsal Kit</h1>
+        <p className="eyebrow">Event-Day Ops</p>
+        <h1>Pre-Event Runbook</h1>
         <p className="hero-copy">
-          Run one full fake tournament pass before the real event. This kit gives you a seeded backup
-          plus a simple checklist so you can verify scoring, stream output, and recovery flow end to end.
+          Run one full dress rehearsal before the real event. This page gives you a rehearsal backup
+          plus a concise runbook to verify scoring, stream output, and recovery flow end to end.
         </p>
         <div className="route-actions" style={{ marginTop: 20 }}>
-          <a href="/rehearsal/summer-2026-seed.json">Download Seed Backup</a>
+          <a href="/rehearsal/summer-2026-seed.json">Download Rehearsal Backup</a>
           <Link href="/summer-2026/admin">Open Admin</Link>
         </div>
       </section>
@@ -52,7 +52,7 @@ export default function RehearsalPage() {
 
         <article className="panel">
           <div className="section-row">
-            <h2 className="section-title">Seeded Scenario</h2>
+            <h2 className="section-title">Rehearsal Scenario</h2>
           </div>
           <div className="metric-grid">
             <div className="metric">
@@ -73,7 +73,7 @@ export default function RehearsalPage() {
             </div>
           </div>
           <p className="helper-text" style={{ marginTop: 16 }}>
-            The seed backup uses the current app export format, so it exercises the same restore path you
+            The rehearsal backup uses the current app export format, so it exercises the same restore path you
             would use for a real backup recovery.
           </p>
         </article>
@@ -82,7 +82,7 @@ export default function RehearsalPage() {
       <section className="route-grid" style={{ marginTop: 24 }}>
         {routeChecks.map((route) => (
           <article className="route-card" key={route}>
-            <p className="route-label">Rehearsal Route</p>
+            <p className="route-label">Runbook Route</p>
             <h2>{route}</h2>
             <p className="helper-text">
               Keep these open during the rehearsal so you can validate admin updates, public standings, and

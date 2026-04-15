@@ -526,7 +526,7 @@ export function AdminDashboard({
   return (
     <main className="app-shell">
       <header className="page-hero">
-        <p className="eyebrow">Commissioner Console</p>
+        <p className="eyebrow">Game Day HQ</p>
         <h1>{snapshot.competition.name}</h1>
         <p className="hero-meta">
           Roster, scoring, livestream state, and import/export from one shared admin surface.
@@ -537,10 +537,10 @@ export function AdminDashboard({
         <TopNav competitionSlug={competitionSlug} />
         <div className="inline-actions">
           <a className="ghost-button" href="/rehearsal">
-            Rehearsal Kit
+            Ops Runbook
           </a>
           <a className="ghost-button" href="/rehearsal/summer-2026-seed.json">
-            Download Seed
+            Rehearsal Backup
           </a>
           <a className="ghost-button" href={`/api/admin/${competitionSlug}/export`}>
             Export Backup

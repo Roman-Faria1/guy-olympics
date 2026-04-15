@@ -10,11 +10,11 @@ export default async function HomePage() {
   return (
     <main className="landing-shell">
       <section className="hero-panel">
-        <p className="eyebrow">Shared Tournament Ops</p>
-        <h1>Guy Olympics Control Room</h1>
+        <p className="eyebrow">Game Day HQ</p>
+        <h1>Guy Olympics Headquarters</h1>
         <p className="hero-copy">
-          A proper small-scale event app: roster intel, score entry, live board, and a
-          stream-safe public view.
+          Run the whole day from one place: roster intel, score entry, live standings, player
+          cards, and a stream-ready public board.
         </p>
       </section>
 
@@ -33,10 +33,10 @@ export default async function HomePage() {
       </section>
 
       <section className="info-strip">
-        <p>Default demo admin passcode: <code>olympics</code></p>
-        <p>Data is stored in <code>.data/demo-db.json</code> until Supabase is connected.</p>
+        <p>Commissioner access is protected by a shared passcode.</p>
+        <p>Live updates sync across admin, standings, and player cards.</p>
         <p>
-          Rehearsal kit: <Link href="/rehearsal"><code>/rehearsal</code></Link>
+          Ops runbook: <Link href="/rehearsal"><code>/rehearsal</code></Link>
         </p>
       </section>
     </main>

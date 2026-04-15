@@ -21,7 +21,7 @@ Current release-tag convention:
 - [x] Restore from the new export format, not just the legacy HTML backup format
 - [x] Add an event-day QA checklist and seeded rehearsal flow
 - [x] Resolve Vercel deployment protection so the event deployment is publicly reachable
-- [ ] Run the deployed RC rehearsal checklist and fix only RC-critical issues
+- [x] Run the deployed RC rehearsal checklist and fix only RC-critical issues
 - [ ] Freeze features and tag `event-summer-2026-rc.1` when the deployed rehearsal passes
 
 ## Merge-back candidates for `main`

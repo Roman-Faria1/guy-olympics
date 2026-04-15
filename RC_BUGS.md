@@ -92,15 +92,13 @@ The preview alias is still protected, but it is no longer the release-blocking p
 - Rate limiting triggered as expected on repeated failed logins
 - Authenticated export returned `200`
 - Post-logout export returned `401`
+- Manual player add/delete worked on production
+- Manual event add/delete worked on production
+- Manual score entry stayed stable during live refresh
+- Two-device sync worked between desktop admin and phone live board
+- Fullscreen live board worked on desktop
+- Stream/scene pass looked good in the real viewing setup
+- Backup export worked
+- Backup import / restore worked
 
-## Still Unverified In This RC Pass
-
-These were not exercised automatically in this pass because they mutate live competition state or need an interactive browser/OBS flow:
-
-- player create/edit/delete on the deployed app
-- event create/edit/reorder on the deployed app
-- partner randomization on the deployed app
-- score entry save/clear on the deployed app
-- backup import / restore on the deployed app
-- two-device live update rehearsal
-- fullscreen scene switching and OBS capture workflow
+No release-blocking gaps remain from the production rehearsal pass.
