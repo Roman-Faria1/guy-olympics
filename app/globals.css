@@ -172,6 +172,10 @@ main {
   gap: 10px;
 }
 
+.top-nav {
+  align-items: center;
+}
+
 .route-actions a,
 .top-nav a,
 .button,
@@ -924,7 +928,6 @@ main {
   }
 
   .broadcast-control-strip,
-  .broadcast-scene-tabs,
   .broadcast-hero-grid,
   .broadcast-chase-grid,
   .broadcast-main-grid,
@@ -946,6 +949,19 @@ main {
   .broadcast-control-note {
     max-width: none;
     text-align: left;
+  }
+
+  .broadcast-scene-tabs {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(172px, 72vw);
+    grid-template-columns: none;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+
+  .broadcast-scene-tabs::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -969,11 +985,40 @@ main {
   }
 
   .route-actions,
-  .top-nav,
   .button-row,
   .inline-actions,
   .event-actions {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .top-nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .top-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .top-nav a {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    padding-inline: 18px;
+  }
+
+  .broadcast-control-strip {
+    gap: 12px;
+  }
+
+  .broadcast-scene-tabs {
+    grid-auto-columns: minmax(156px, 74vw);
+  }
+
+  .broadcast-scene-tab {
+    min-height: 84px;
   }
 }
