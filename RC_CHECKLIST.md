@@ -17,87 +17,86 @@ For a tighter production walkthrough, use [RC_REHEARSAL_RUNBOOK.md](/home/roman/
 
 ## Preflight
 
-- [ ] Confirm the active branch is `event/summer-2026`
-- [ ] Confirm Vercel is deploying from `event/summer-2026`
-- [ ] Confirm local `npm run lint`, `npm test`, and `npm run build` all pass
-- [ ] Confirm these Supabase migrations are applied in production:
-  - [ ] `supabase/migrations/0001_init.sql`
-  - [ ] `supabase/migrations/0002_realtime_public_read.sql`
-  - [ ] `supabase/migrations/0003_admin_auth_hardening.sql`
-- [ ] Confirm production env vars are present in Vercel
-- [ ] Export a fresh backup before rehearsal starts
+- [x] Confirm the active branch is `event/summer-2026`
+- [x] Confirm Vercel is deploying from `event/summer-2026`
+- [x] Confirm local `npm run lint`, `npm test`, and `npm run build` all pass
+- [x] Confirm these Supabase migrations are applied in production:
+  - [x] `supabase/migrations/0001_init.sql`
+  - [x] `supabase/migrations/0002_realtime_public_read.sql`
+  - [x] `supabase/migrations/0003_admin_auth_hardening.sql`
+- [x] Confirm production env vars are present in Vercel
+- [x] Export a fresh backup before rehearsal starts
 
 ## Admin Flow
 
-- [ ] Log in successfully with the shared passcode
-- [ ] Confirm invalid passcode attempts show the expected error
-- [ ] Confirm rate limiting triggers after repeated failures
-- [ ] Confirm logout works and protected admin routes require a new login
-- [ ] Add a player
-- [ ] Edit a player
-- [ ] Upload a player photo
-- [ ] Delete a player
-- [ ] Confirm roster counts and cards match the database state after changes
-- [ ] Add a new event
-- [ ] Rename an event
-- [ ] Reorder events
-- [ ] Toggle a live event from the score-entry panel
+- [x] Log in successfully with the shared passcode
+- [x] Confirm invalid passcode attempts show the expected error
+- [x] Confirm rate limiting triggers after repeated failures
+- [x] Confirm logout works and protected admin routes require a new login
+- [x] Add a player
+- [x] Edit a player
+- [x] Upload a player photo
+- [x] Delete a player
+- [x] Confirm roster counts and cards match the database state after changes
+- [x] Add a new event
+- [x] Rename an event
+- [x] Reorder events
+- [x] Toggle a live event from the score-entry panel
 
 ## Scoring And Results
 
-- [ ] Save placements for an individual event
-- [ ] Save placements for a team event
-- [ ] Confirm validation catches invalid or conflicting placements
-- [ ] Confirm intentional ties are allowed and surfaced clearly
-- [ ] Confirm clearing an event requires explicit confirmation
-- [ ] Refresh the page and confirm saved results persist
+- [x] Save placements for an individual event
+- [x] Save placements for a team event
+- [x] Confirm validation catches invalid or conflicting placements
+- [x] Confirm intentional ties are allowed and surfaced clearly
+- [x] Confirm clearing an event requires explicit confirmation
+- [x] Refresh the page and confirm saved results persist
 
 ## Partners
 
-- [ ] Randomize partners
-- [ ] Confirm partner groups render correctly in admin
-- [ ] Confirm team-event scoring respects shared partner assignments
+- [x] Randomize partners
+- [x] Confirm partner groups render correctly in admin
+- [x] Confirm team-event scoring respects shared partner assignments
 
 ## Public Views
 
-- [ ] Open `/{competitionSlug}/live`
-- [ ] Open `/{competitionSlug}/players`
-- [ ] Confirm the live board renders standings correctly
-- [ ] Confirm player cards render correctly
-- [ ] Confirm uploaded player photos render correctly
+- [x] Open `/{competitionSlug}/live`
+- [x] Open `/{competitionSlug}/players`
+- [x] Confirm the live board renders standings correctly
+- [x] Confirm player cards render correctly
+- [x] Confirm uploaded player photos render correctly
 
 ## Broadcast Check
 
-- [ ] Open the live board in fullscreen
-- [ ] Switch through all scenes:
-  - [ ] `overview`
-  - [ ] `podium`
-  - [ ] `spotlight`
-  - [ ] `schedule`
-- [ ] Confirm scene query params work:
-  - [ ] `?scene=overview`
-  - [ ] `?scene=podium`
-  - [ ] `?scene=spotlight`
-  - [ ] `?scene=schedule`
-- [ ] Confirm auto-rotate works
-- [ ] Confirm the page is clean enough for OBS/browser capture
+- [x] Open the live board in fullscreen
+- [x] Switch through all scenes:
+  - [x] `overview`
+  - [x] `podium`
+  - [x] `spotlight`
+  - [x] `schedule`
+- [x] Confirm scene query params work:
+  - [x] `?scene=overview`
+  - [x] `?scene=podium`
+  - [x] `?scene=spotlight`
+  - [x] `?scene=schedule`
+- [x] Confirm the page is clean enough for OBS/browser capture
 
 ## Two-Device Sync
 
-- [ ] Open admin in one browser/device
-- [ ] Open live board in a second browser/device
-- [ ] Change a score in admin
-- [ ] Confirm the live board updates quickly without a manual refresh
-- [ ] Change a player or event detail
-- [ ] Confirm the public views update as expected
+- [x] Open admin in one browser/device
+- [x] Open live board in a second browser/device
+- [x] Change a score in admin
+- [x] Confirm the live board updates quickly without a manual refresh
+- [x] Change a player or event detail
+- [x] Confirm the public views update as expected
 
 ## Recovery
 
-- [ ] Export the current backup
-- [ ] Import the rehearsal seed backup
-- [ ] Confirm the seeded state restores correctly
-- [ ] Re-import the exported backup
-- [ ] Confirm the original event state is restored cleanly
+- [x] Export the current backup
+- [x] Import the rehearsal seed backup
+- [x] Confirm the seeded state restores correctly
+- [x] Re-import the exported backup
+- [x] Confirm the original event state is restored cleanly
 
 ## Release Candidate Triage
 
@@ -115,10 +114,10 @@ Do not add new features here unless they directly unblock rehearsal or event-day
 
 You are ready to tag `event-summer-2026-rc.1` when:
 
-- [ ] No blocker bugs remain
-- [ ] The full checklist has been completed on the deployed app
-- [ ] Backup export and restore both worked
-- [ ] Auth and rate limiting behaved as expected
-- [ ] Broadcast scenes were tested successfully
-- [ ] At least one two-device sync rehearsal was successful
-- [ ] The team is comfortable freezing features and only taking bug fixes
+- [x] No blocker bugs remain
+- [x] The full checklist has been completed on the deployed app
+- [x] Backup export and restore both worked
+- [x] Auth and rate limiting behaved as expected
+- [x] Broadcast scenes were tested successfully
+- [x] At least one two-device sync rehearsal was successful
+- [x] The team is comfortable freezing features and only taking bug fixes
